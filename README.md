@@ -1,11 +1,6 @@
-<img align="left" width="80" height="80" src="https://raw.githubusercontent.com/mbruel/ngPost/master/src/resources/icons/ngPost.png" alt="ngPost">
+<img align="left" width="80" height="80" src="https://raw.githubusercontent.com/disinclination/ngPost/master/src/resources/icons/ngPost.png" alt="ngPost">
 
-# ngPost v4.16
-
-[Pour la version Française cliquez ici ;)](https://github.com/mbruel/ngPost/blob/master/README_FR.md)<br/>
-<br/>
-[Here is an invite for the brand new discord server](https://discord.gg/TwYRDy9), feel free to join if you've questions or if interested in beta testing the new features before they're released ;)<br/>
-<br/>
+# ngPost v4.17
 
 **Command Line and sexy GUI Usenet poster** for binaries developped in **C++11/Qt5**</br>
 it is designed to be **as fast as possible** and offer ALL the main features **to post data easily and safely**.</br>
@@ -20,9 +15,9 @@ it can **switch off the computer** when all the posts are finished<br/>
 it is **translated in Chinese, Dutch, English, French, German, Portuguese and Spanish**.
 
 
-![ngPost_v4.3](https://raw.githubusercontent.com/mbruel/ngPost/master/pics/ngPost_v4.3.png)
+![ngPost_v4.3](https://raw.githubusercontent.com/disinclination/ngPost/master/pics/ngPost_v4.3.png)
 
-[Releases are availables](https://github.com/mbruel/ngPost/releases/tag/v4.16) for: Linux 64bit, Windows (both 32bit and 64bit), MacOS and Raspbian (RPI 4). Soon for Android then iOS...
+[Releases are availables](https://github.com/disinclination/ngPost/releases/tag/v4.16) for: Linux 64bit, Windows (both 32bit and 64bit), MacOS and Raspbian (RPI 4). Soon for Android then iOS...
 
 Here are the main features and advantages of ngPost:
 -   **full obfuscation of the Article Header** : the Subject will be a UUID (as the msg-id) and a random Poster will be used. **Be Careful**, using this, you won't be able to find your post on Usenet (or any Indexers) if you lose the NZB file. But using this method is **completely safe**, **no need to obfuscate your files or even tp use a password**.
@@ -138,7 +133,7 @@ so in the second example above, the nzb would be: /tmp/file1.nzb
 ### Configuration file and keywords that are only in config
 The default configuration file for Linux and Mac environment is: **~/.ngPost** (no conf extension)<br/>
 If you wish, you can use another one in command line with the -c option.<br/>
-[Here the example to follow](https://github.com/mbruel/ngPost/blob/master/ngPost.conf).<br/>
+[Here the example to follow](https://github.com/disinclination/ngPost/blob/master/ngPost.conf).<br/>
 <br/>
 Most configuration keywords can be used in command line but few of them, are only in the config file:
 - **MONITOR_NZB_FOLDERS** : each monitoring post would go in its own folder created in nzbPath (Req/Issue #15)
@@ -241,19 +236,6 @@ A list of Usenet posters from Nyuu github [can be found here](https://github.com
 </pre>
 
 
-### Questions / Issues / Requests
-- if you've any troubles to build or run ngPost, feel free to drop me an email
-- if you've some comments on the code, any questions on the implementation or any proposal for improvements, I'll be happy to discuss it with you so idem, feel free to drop me an email
-- if you'd like some other features, same same (but different), drop me an email ;)
-
-Here is my email: Matthieu.Bruel@gmail.com
-
-
-### Supported Languages
-For now, ngPost is translated in Chinese, English, French, German, Portuguese and Spanish.<br/>
-If you'd like to translate ngPost in your language, it's easy to do (there is a nice GUI for that: QtLinguist), please get in touch with me (Matthieu.Bruel@gmail.com)
-
-
 ### Thanks
 - Uukrull for his intensive testing and feedbacks and for building all the MacOS packages.
 - awsms for his testing on proper server with a 10Gb/s connection that helped to improve ngPost's upload speed and the multi-threading support
@@ -265,32 +247,4 @@ If you'd like to translate ngPost in your language, it's easy to do (there is a 
 - Peng for the Chinese translation
 - all ngPost users ;)
 
-
-### Donations
-I'm Freelance nowadays, working on several personal projects, so if you use the app and would like to contribute to the effort, feel free to donate what you can.<br/>
-<br/>
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W2C236U6JNTUA&item_name=ngPost&currency_code=EUR"><img align="left" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="ex0days"></a>
- or in Bitcoin at this address: **3BGbnvnnBCCqrGuq1ytRqUMciAyMXjXAv6**
-<img align="right" align="bottom" width="120" height="120" src="https://raw.githubusercontent.com/mbruel/ngPost/master/pics/btc_qr.gif" alt="ngPost_QR">
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 <br/>
