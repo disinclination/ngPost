@@ -1,0 +1,55 @@
+name: Build Qt Project
+
+on:
+  push:
+    branches:
+      - main
+      - rc-*
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            qt_version: '6.8.2'
+            host: 'linux'
+            arch: 'gcc_64'
+            shell: bash
+            build_command: |
+              qmake
+              make
+          - os: windows-latest
+            qt_version: '6.8.2'
+            host: 'win'
+            arch: 'mingw81_64'
+            shell: cmd
+            build_command: |
+              qmake
+              mingw32-make
+          - os: macos-latest
+            qt_version: '6.8.2'
+            host: 'mac'
+            arch: 'clang_64'
+            shell: bash
+            build_command: |
+              qmake
+              make
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install build essentials on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ matrix.qt_version }}
+          host: ${{ matrix.host }}
+          arch: ${{ matrix.arch }}
+
+      - name: Build Project
+        run: ${{ matrix.build_command }}
+        shell: ${{ matrix.shell }}
