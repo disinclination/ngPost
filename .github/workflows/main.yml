@@ -1,10 +1,9 @@
-name: Build Qt Project
+name: Development Project Build
 
 on:
   push:
-    branches:
-      - main
-      - rc-*
+    branches-ignore:
+      - master
 
 jobs:
   build:
