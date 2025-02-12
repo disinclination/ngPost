@@ -117,5 +117,6 @@ HEADERS += \
 
 
 RESOURCES += \
-    resources/resources.qrc
+    resources/resources.qrc \
+    resources/version.rc
 
