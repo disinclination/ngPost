@@ -25,7 +25,7 @@ TRANSLATIONS = lang/ngPost_en.ts lang/ngPost_fr.ts lang/ngPost_es.ts lang/ngPost
 
 win32: {
     LIBS += -luser32
-    RC_ICONS += ngPost.ico
+    RC_ICONS = ngPost.ico
     RC_FILE = resources/version.rc
     # Include console only if not using HMI (GUI)
     !use_hmi {
