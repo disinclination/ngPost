@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: binary-windows
-          path: src/release/**
+          path: src/release/ngPost.exe
 
   build-macos:
     runs-on: macos-latest
