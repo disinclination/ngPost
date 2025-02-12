@@ -42,7 +42,7 @@ jobs:
         run: |
           cd src
           del Makefile*  # Force Makefile regeneration
-          qmake "DEFINES+=__USE_CONNECTION_TIMEOUT__" ngPost.pro
+          qmake ngPost.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
           mingw32-make CXXFLAGS="-fno-keep-inline-dllexport -g -Wall -Wextra -Wextra -fexceptions -mthreads -D__DEBUG__ -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -D__USE_HMI__ -DAPP_VERSION="4.17" -D__USE_CONNECTION_TIMEOUT__ -D__COMPUTE_IMMEDIATE_SPEED__ -D__USE_TMP_RAM__ -D__RELEASE_ARTICLES_WHEN_CON_FAILS__ -D__DEBUG__ -DLOG_CONNECTION_STEPS -DLOG_NEWS_AUTH -DLOG_CONSTRUCTORS -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB"
 
       - name: Upload Windows Binary
