@@ -1,11 +1,6 @@
-<img align="left" width="80" height="80" src="https://raw.githubusercontent.com/mbruel/ngPost/master/src/resources/icons/ngPost.png" alt="ngPost">
+<img align="left" width="80" height="80" src="https://raw.githubusercontent.com/disinclination/ngPost/master/src/resources/icons/ngPost.png" alt="ngPost">
 
-# ngPost v4.15
-
-[Pour la version Française cliquez ici ;)](https://github.com/mbruel/ngPost/blob/master/README_FR.md)<br/>
-<br/>
-[Here is an invite for the brand new discord server](https://discord.gg/TwYRDy9), feel free to join if you've questions or if interested in beta testing the new features before they're released ;)<br/>
-<br/>
+# ngPost v4.17
 
 **Command Line and sexy GUI Usenet poster** for binaries developped in **C++11/Qt5**</br>
 it is designed to be **as fast as possible** and offer ALL the main features **to post data easily and safely**.</br>
@@ -20,9 +15,9 @@ it can **switch off the computer** when all the posts are finished<br/>
 it is **translated in Chinese, Dutch, English, French, German, Portuguese and Spanish**.
 
 
-![ngPost_v4.3](https://raw.githubusercontent.com/mbruel/ngPost/master/pics/ngPost_v4.3.png)
+![ngPost_v4.3](https://raw.githubusercontent.com/disinclination/ngPost/master/pics/ngPost_v4.3.png)
 
-[Releases are availables](https://github.com/mbruel/ngPost/releases/tag/v4.15) for: Linux 64bit, Windows (both 32bit and 64bit), MacOS and Raspbian (RPI 4). Soon for Android then iOS...
+[Releases are availables](https://github.com/disinclination/ngPost/releases/tag/v4.16) for: Linux 64bit, Windows (both 32bit and 64bit), MacOS and Raspbian (RPI 4). Soon for Android then iOS...
 
 Here are the main features and advantages of ngPost:
 -   **full obfuscation of the Article Header** : the Subject will be a UUID (as the msg-id) and a random Poster will be used. **Be Careful**, using this, you won't be able to find your post on Usenet (or any Indexers) if you lose the NZB file. But using this method is **completely safe**, **no need to obfuscate your files or even tp use a password**.
@@ -125,11 +120,11 @@ Syntax: ngPost (options)* (-i <file or folder> | --auto <folder> | --monitor <fo
 	-n or --connection : number of NNTP connections
 
 Examples:
-  - with monitoring: ngPost_v4.15_cmd-x86_64.AppImage --monitor /data/folder1 --monitor /data/folder2 --auto_compress --rm_posted --disp_progress files
-  - with auto post: ngPost_v4.15_cmd-x86_64.AppImage --auto /data/folder1 --auto /data/folder2 --compress --gen_par2 --gen_name --gen_pass --rar_size 42 --disp_progress files
-  - with compression, filename obfuscation, random password and par2: ngPost_v4.15_cmd-x86_64.AppImage -i /tmp/file1 -i /tmp/folder1 -o /nzb/myPost.nzb --compress --gen_name --gen_pass --gen_par2
-  - with config file: ngPost_v4.15_cmd-x86_64.AppImage -c ~/.ngPost -m "password=qwerty42" -f ngPost@nowhere.com -i /tmp/file1 -i /tmp/file2 -i /tmp/folderToPost1 -i /tmp/folderToPost2
-  - with all params:  ngPost_v4.15_cmd-x86_64.AppImage -t 1 -m "password=qwerty42" -m "metaKey=someValue" -h news.newshosting.com -P 443 -s -u user -p pass -n 30 -f ngPost@nowhere.com  -g "alt.binaries.test,alt.binaries.test2" -a 64000 -i /tmp/folderToPost -o /tmp/folderToPost.nzb
+  - with monitoring: ngPost_v4.16_cmd-x86_64.AppImage --monitor /data/folder1 --monitor /data/folder2 --auto_compress --rm_posted --disp_progress files
+  - with auto post: ngPost_v4.16_cmd-x86_64.AppImage --auto /data/folder1 --auto /data/folder2 --compress --gen_par2 --gen_name --gen_pass --rar_size 42 --disp_progress files
+  - with compression, filename obfuscation, random password and par2: ngPost_v4.16_cmd-x86_64.AppImage -i /tmp/file1 -i /tmp/folder1 -o /nzb/myPost.nzb --compress --gen_name --gen_pass --gen_par2
+  - with config file: ngPost_v4.16_cmd-x86_64.AppImage -c ~/.ngPost -m "password=qwerty42" -f ngPost@nowhere.com -i /tmp/file1 -i /tmp/file2 -i /tmp/folderToPost1 -i /tmp/folderToPost2
+  - with all params:  ngPost_v4.16_cmd-x86_64.AppImage -t 1 -m "password=qwerty42" -m "metaKey=someValue" -h news.newshosting.com -P 443 -s -u user -p pass -n 30 -f ngPost@nowhere.com  -g "alt.binaries.test,alt.binaries.test2" -a 64000 -i /tmp/folderToPost -o /tmp/folderToPost.nzb
 
 If you don't provide the output file (nzb file), we will create it in the nzbPath with the name of the first file or folder given in the command line.
 so in the second example above, the nzb would be: /tmp/file1.nzb
@@ -138,7 +133,7 @@ so in the second example above, the nzb would be: /tmp/file1.nzb
 ### Configuration file and keywords that are only in config
 The default configuration file for Linux and Mac environment is: **~/.ngPost** (no conf extension)<br/>
 If you wish, you can use another one in command line with the -c option.<br/>
-[Here the example to follow](https://github.com/mbruel/ngPost/blob/master/ngPost.conf).<br/>
+[Here the example to follow](https://github.com/disinclination/ngPost/blob/master/ngPost.conf).<br/>
 <br/>
 Most configuration keywords can be used in command line but few of them, are only in the config file:
 - **MONITOR_NZB_FOLDERS** : each monitoring post would go in its own folder created in nzbPath (Req/Issue #15)
@@ -160,17 +155,17 @@ The following ones are for experimented posters:
 
 ### Linux 64bit portable release (compiled with Qt v5.12.6)
 if you don't want to build it and install the dependencies, you can also the portable release that includes everything.<br/>
-- download [ngPost_v4.15-x86_64.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.15/ngPost_v4.15-x86_64.AppImage) or [ngPost_v4.15_cmd-x86_64.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.15/ngPost_v4.15_cmd-x86_64.AppImage) for pure CMD (the first version doing both CMD and GUI)
-- chmod 755 ngPost_v4.15-x86_64.AppImage
+- download [ngPost_v4.16-x86_64.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.16/ngPost_v4.16-x86_64.AppImage) or [ngPost_v4.16_cmd-x86_64.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.16/ngPost_v4.16_cmd-x86_64.AppImage) for pure CMD (the first version doing both CMD and GUI)
+- chmod 755 ngPost_v4.16-x86_64.AppImage
 - launch it using the same syntax than describe in the section above
 - if you wish to keep the configuration file, edit the file **~/.ngPost** using [this model](https://raw.githubusercontent.com/mbruel/ngPost/master/ngPost.conf) (don't put the .conf extension)
 
-PS: for older system with GLIBC < 2.24, here is a version compiled on Debian8 with GLIBC 2.19 and Qt v5.8.0: [ngPost_v4.15-x86_64_debian8.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.15/ngPost_v4.15-x86_64_debian8.AppImage)
+PS: for older system with GLIBC < 2.24, here is a version compiled on Debian8 with GLIBC 2.19 and Qt v5.8.0: [ngPost_v4.16-x86_64_debian8.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.16/ngPost_v4.16-x86_64_debian8.AppImage)
 
 
 ### Raspbian release (armhf for Raspberry PI)
-- download [ngPost_v4.15-armhf.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.15/ngPost_v4.15-armhf.AppImage)
-- chmod 755 ngPost_v4.15-armhf.AppImage
+- download [ngPost_v4.16-armhf.AppImage](https://github.com/mbruel/ngPost/releases/download/v4.16/ngPost_v4.16-armhf.AppImage)
+- chmod 755 ngPost_v4.16-armhf.AppImage
 - launch it using the same syntax than describe in the section above
 - if you wish to keep the configuration file, edit the file **~/.ngPost** using [this model](https://raw.githubusercontent.com/mbruel/ngPost/master/ngPost.conf) (don't put the .conf extension)
 
@@ -192,7 +187,7 @@ RAR_EXTRA = -mx0 -mhe=on
 
 
 ### Windows installer
-- just use the packager [ngPost_v4.15_x64_setup.exe](https://github.com/mbruel/ngPost/releases/download/v4.15/ngPost_v4.15_x64_setup.exe) or [ngPost_v4.15_x86_setup.exe](https://github.com/mbruel/ngPost/releases/download/v4.15/ngPost_v4.15_x86_setup.exe) for the 32bit version
+- just use the packager [ngPost_v4.16_x64_setup.exe](https://github.com/mbruel/ngPost/releases/download/v4.16/ngPost_v4.16_x64_setup.exe) or [ngPost_v4.16_x86_setup.exe](https://github.com/mbruel/ngPost/releases/download/v4.16/ngPost_v4.16_x86_setup.exe) for the 32bit version
 - edit **ngPost.conf** (in the installation folder) to add your server settings (you can put several).
 - launch **ngPost.exe** (GUI version)
 - or you can use it with the command line: **ngPost.exe** -i "your file or directory"
@@ -206,7 +201,7 @@ By default:
 
 
 ### MacOS release built on High Sierra (v10.13)
-- download [ngPost_v4.15.dmg](https://github.com/mbruel/ngPost/releases/download/v4.15/ngPost_v4.15.dmg)
+- download [ngPost_v4.16.1.dmg](https://github.com/mbruel/ngPost/releases/download/v4.16/ngPost_v4.16.1.dmg)
 - launch it using the same syntax than describe in the section above
 - if you wish to keep the configuration file, edit the file **~/.ngPost** using [this model](https://raw.githubusercontent.com/mbruel/ngPost/master/ngPost.conf) (don't put the .conf extension)
 
@@ -241,19 +236,6 @@ A list of Usenet posters from Nyuu github [can be found here](https://github.com
 </pre>
 
 
-### Questions / Issues / Requests
-- if you've any troubles to build or run ngPost, feel free to drop me an email
-- if you've some comments on the code, any questions on the implementation or any proposal for improvements, I'll be happy to discuss it with you so idem, feel free to drop me an email
-- if you'd like some other features, same same (but different), drop me an email ;)
-
-Here is my email: Matthieu.Bruel@gmail.com
-
-
-### Supported Languages
-For now, ngPost is translated in Chinese, English, French, German, Portuguese and Spanish.<br/>
-If you'd like to translate ngPost in your language, it's easy to do (there is a nice GUI for that: QtLinguist), please get in touch with me (Matthieu.Bruel@gmail.com)
-
-
 ### Thanks
 - Uukrull for his intensive testing and feedbacks and for building all the MacOS packages.
 - awsms for his testing on proper server with a 10Gb/s connection that helped to improve ngPost's upload speed and the multi-threading support
@@ -265,32 +247,4 @@ If you'd like to translate ngPost in your language, it's easy to do (there is a 
 - Peng for the Chinese translation
 - all ngPost users ;)
 
-
-### Donations
-I'm Freelance nowadays, working on several personal projects, so if you use the app and would like to contribute to the effort, feel free to donate what you can.<br/>
-<br/>
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W2C236U6JNTUA&item_name=ngPost&currency_code=EUR"><img align="left" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="ex0days"></a>
- or in Bitcoin at this address: **3BGbnvnnBCCqrGuq1ytRqUMciAyMXjXAv6**
-<img align="right" align="bottom" width="120" height="120" src="https://raw.githubusercontent.com/mbruel/ngPost/master/pics/btc_qr.gif" alt="ngPost_QR">
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 <br/>

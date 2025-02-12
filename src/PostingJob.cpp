@@ -33,6 +33,7 @@
 #include <QMutex>
 #include <QCoreApplication>
 #include <QDir>
+#include <QRegularExpression>
 
 PostingJob::PostingJob(NgPost *ngPost,
                        const QString &nzbFilePath,
@@ -120,6 +121,9 @@ PostingJob::PostingJob(NgPost *ngPost,
     if (_useHMI)
         connect(&_immediateSpeedTimer, &QTimer::timeout, this, &PostingJob::onImmediateSpeedComputation, Qt::QueuedConnection);
 #endif
+
+    if (ngPost->debugMode())
+        _log(NntpConnection::sslSupportInfo());
 }
 
 PostingJob::~PostingJob()
@@ -175,6 +179,16 @@ void PostingJob::resume()
 
     _isPaused = false;
     _pauseDuration += _pauseTimer.elapsed();
+}
+
+QString PostingJob::sslSupportInfo()
+{
+    return NntpConnection::sslSupportInfo();
+}
+
+bool PostingJob::supportsSsl()
+{
+    return NntpConnection::supportsSsl();
 }
 
 void PostingJob::onResumeTriggered()
@@ -970,7 +984,7 @@ bool PostingJob::startCompressFiles(const QString &cmdRar,
 
 #if defined( Q_OS_WIN )
     if (archiveTmpFolder.startsWith("//"))
-        archiveTmpFolder.replace(QRegExp("^//"), "\\\\");
+        archiveTmpFolder.replace(QRegularExpression("^//"), "\\\\");
 #endif
     args << QString("%1/%2.%3").arg(archiveTmpFolder, archiveName, _use7z ? "7z" : "rar");
 
@@ -1004,7 +1018,7 @@ bool PostingJob::startCompressFiles(const QString &cmdRar,
         QString path = fileInfo.absoluteFilePath();
 #if defined( Q_OS_WIN )
         if (path.startsWith("//"))
-            path.replace(QRegExp("^//"), "\\\\");
+            path.replace(QRegularExpression("^//"), "\\\\");
 #endif
         if (fileInfo.isDir())
         {
@@ -1021,7 +1035,7 @@ bool PostingJob::startCompressFiles(const QString &cmdRar,
             QString path = fileInfo.absoluteFilePath();
 #if defined( Q_OS_WIN )
             if (path.startsWith("//"))
-                path.replace(QRegExp("^//"), "\\\\");
+                path.replace(QRegularExpression("^//"), "\\\\");
 #endif
             if (fileInfo.isDir())
                 hasDir = true;

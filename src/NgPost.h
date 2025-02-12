@@ -296,9 +296,6 @@ private:
 
     static const int sNbPreparedArticlePerConnection = NB_ARTICLES_TO_PREPARE_PER_CONNECTION;
 
-    static const char *sDonationTooltip;
-    static const char *sDonationBtcTooltip;
-
     static const char sDefaultFieldSeparator = ';';
     static constexpr const char *sTranslationPath = ":/lang";
 
@@ -323,6 +320,7 @@ public:
     inline const char * appName() override;
 
     void checkForNewVersion() override;
+    bool checkSupportSSL();
 #ifdef __USE_HMI__
     int startHMI() override;
 #endif
@@ -415,12 +413,6 @@ signals:
 
 public slots:
     void onCheckForNewVersion();
-#ifdef __USE_HMI__
-    void onDonation();
-    void onDonationBTC();
-    void onAboutClicked();
-#endif
-
 
     void onPostingJobStarted();
     void onPackingDone();
@@ -488,8 +480,6 @@ public:
 
     inline static QString quickJobName();
     inline static QString folderMonitoringName();
-    inline static QString donationTooltip();
-    inline static QString donationBtcTooltip();
 
     inline static std::string randomStdFrom(ushort length = 13);
 
@@ -507,9 +497,6 @@ public:
 
 QString NgPost::quickJobName() { return tr(sQuickJobName); }
 QString NgPost::folderMonitoringName() { return tr(sFolderMonitoringName); }
-QString NgPost::donationTooltip() { return tr(sDonationTooltip); }
-QString NgPost::donationBtcTooltip() { return tr(sDonationBtcTooltip); }
-
 
 std::string NgPost::from() const
 {

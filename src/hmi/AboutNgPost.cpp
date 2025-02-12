@@ -44,12 +44,6 @@ AboutNgPost::AboutNgPost(NgPost *ngPost, QWidget *parent) :
     ui->descLbl->setFont(QFont( "Caladea", 14, QFont::Medium));
 //    ui->cosi7->setFont(QFont( "DejaVu Serif", 28, QFont::Bold));
 
-
-    ui->donateButton->setToolTip(ngPost->donationTooltip());
-    ui->btcDonate->setToolTip(ngPost->donationBtcTooltip());
-    connect(ui->donateButton, &QAbstractButton::clicked, ngPost, &NgPost::onDonation);
-    connect(ui->btcDonate,    &QAbstractButton::clicked, ngPost, &NgPost::onDonationBTC);
-
     connect(ui->closeButton, &QAbstractButton::clicked, this, &QWidget::close);
 }
 

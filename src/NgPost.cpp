@@ -51,16 +51,12 @@
 #endif
 
 const char *NgPost::sAppName          = "ngPost";
-const QString NgPost::sVersion        = QString::number(APP_VERSION);
-const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/mbruel/ngPost/master/src/ngPost.pro";
-const QString NgPost::sDonationURL    = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W2C236U6JNTUA&item_name=ngPost&currency_code=EUR";
-const QString NgPost::sDonationBtcURL = "https://github.com/mbruel/ngPost#donations";
+const QString NgPost::sVersion        = QString::number(4.17);
+const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/mbruel/ngPost/master/src/ngPost.pri";
 
 const QString NgPost::sMainThreadName     = "MainThread";
 const char *NgPost::sFolderMonitoringName = QT_TRANSLATE_NOOP("NgPost", "Auto Posting");
 const char *NgPost::sQuickJobName         = QT_TRANSLATE_NOOP("NgPost", "Quick Post");
-const char *NgPost::sDonationTooltip      = QT_TRANSLATE_NOOP("NgPost", "Donations are welcome, I spent quite some time to develop this app and make a sexy GUI although I'm not using it ;)");
-const char *NgPost::sDonationBtcTooltip   = QT_TRANSLATE_NOOP("NgPost", "Feel free to donate in BTC, click here to see my address on the GitHub section");
 
 std::string NgPost::sArticleIdSignature   = sDefaultMsgIdSignature;
 const std::string NgPost::sRandomAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -642,6 +638,17 @@ void NgPost::checkForNewVersion()
     QObject::connect(reply, &QNetworkReply::finished, this, &NgPost::onCheckForNewVersion);
 }
 
+bool NgPost::checkSupportSSL()
+{
+    if (!PostingJob::supportsSsl())
+    {
+        _log(tr("SSL issue on your system..."));
+        _log(PostingJob::sslSupportInfo());
+        return false;
+    }
+    return true;
+}
+
 void NgPost::doNzbPostCMD(PostingJob *job)
 {
     // first NZB_UPLOAD_URL
@@ -834,25 +841,6 @@ void NgPost::onCheckForNewVersion()
     reply->deleteLater();
 }
 
-#ifdef __USE_HMI__
-#include <QDesktopServices>
-void NgPost::onDonation()
-{
-    QDesktopServices::openUrl(sDonationURL);
-}
-void NgPost::onDonationBTC()
-{
-    QDesktopServices::openUrl(sDonationBtcURL);
-}
-
-#include "hmi/AboutNgPost.h"
-void NgPost::onAboutClicked()
-{
-    AboutNgPost about(this);
-    about.exec();
-}
-#endif
-
 void NgPost::onPostingJobStarted()
 {
 #ifdef __USE_HMI__
@@ -907,7 +895,7 @@ void NgPost::_prepareNextPacking()
     if (_pendingJobs.size())
     {
         _packingJob = _pendingJobs.first();
-        if (_packingJob->hasCompressed())
+        if (_packingJob->hasPacking())
             emit _packingJob->startPosting(false);
         else if (debugFull())
             _log(tr("no packing needed for next pending job %1").arg(_packingJob->nzbName()));
@@ -976,14 +964,17 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
                 {
                     _packingJob = nullptr;
                     if (_activeJob->isPacked())
-                        _activeJob->_postFiles();                    
-                    else if (!_activeJob->hasCompressed())
+                    {
+                        _activeJob->_postFiles();
+                        _prepareNextPacking();
+                    }
+                    else if (!_activeJob->hasPacking())
                     {
                         if (debugFull())
                             _log(tr("start non packing job..."));
                         emit _activeJob->startPosting(true);
+                        _prepareNextPacking();
                     }
-                    _prepareNextPacking();
                     // otherwise it will be triggered automatically when the packing is finished
                     // as it is now the active job ;)
                 }
@@ -2496,7 +2487,9 @@ void NgPost::_dumpParams() const
 void NgPost::_showVersionASCII() const
 {
     _cout << sNgPostASCII
-          << "                          v" << sVersion << "\n\n" << MB_FLUSH;
+          << "                          v" << sVersion << "\n\n"
+          << PostingJob::sslSupportInfo()  << "\n"
+          << MB_FLUSH;
 }
 
 void NgPost::saveConfig()
