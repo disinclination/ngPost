@@ -44,9 +44,9 @@ jobs:
       - name: Build Project on Windows
         run: |
           cd src
-          del Makefile*  # Force Makefile regeneration
-          qmake ngPost.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
-          mingw32-make -f Makefile.Release CXXFLAGS="-D__DEBUG__ -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -D__USE_HMI__ -DAPP_VERSION="4.17" -D__USE_CONNECTION_TIMEOUT__ -D__COMPUTE_IMMEDIATE_SPEED__ -D__USE_TMP_RAM__ -D__RELEASE_ARTICLES_WHEN_CON_FAILS__ -D__DEBUG__ -DLOG_CONNECTION_STEPS -DLOG_NEWS_AUTH -DLOG_CONSTRUCTORS -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB"
+          del Makefile*
+          qmake ngPost.pro -spec win32-g++ "CONFIG+=qtquickcompiler DEFINES+=__DEBUG__ UNICODE _UNICODE WIN32 MINGW_HAS_SECURE_API=1 __USE_HMI__ APP_VERSION=4.17 __USE_CONNECTION_TIMEOUT__ __COMPUTE_IMMEDIATE_SPEED__ __USE_TMP_RAM__ __RELEASE_ARTICLES_WHEN_CON_FAILS__ LOG_CONNECTION_STEPS LOG_NEWS_AUTH LOG_CONSTRUCTORS QT_DEPRECATED_WARNINGS QT_QML_DEBUG QT_WIDGETS_LIB QT_GUI_LIB QT_NETWORK_LIB QT_CORE_LIB"
+          mingw32-make -f Makefile.Release
 
       - name: Deploy Qt DLLs with windeployqt
         run: |
