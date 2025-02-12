@@ -44,6 +44,9 @@ jobs:
           del Makefile*  # Force Makefile regeneration
           qmake "DEFINES+=__USE_CONNECTION_TIMEOUT__" ngPost.pro
           mingw32-make CXXFLAGS="-Wno-attributes -D__USE_CONNECTION_TIMEOUT__ -D__COMPUTE_IMMEDIATE_SPEED__ -D__USE_TMP_RAM__ -D__RELEASE_ARTICLES_WHEN_CON_FAILS__ -DQT_NO_DEBUG_OUTPUT -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB"
+      - name: Deploy Qt DLLs with windeployqt
+        run: |
+          $QtDir\bin\windeployqt.exe src/release/ngPost.exe --release
       - name: Upload Windows Binary
         uses: actions/upload-artifact@v4
         with:
