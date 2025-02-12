@@ -20,10 +20,10 @@
 #ifndef POSTER_H
 #define POSTER_H
 
+#include <QMutex>
+#include <QQueue>
 #include <QThread>
 #include <QVector>
-#include <QQueue>
-#include <QMutex>
 class NgPost;
 class ArticleBuilder;
 class NntpConnection;
@@ -46,18 +46,19 @@ class Poster
     friend class ArticleBuilder;
 
 private:
-    const ushort      _id;
-    NgPost     *const _ngPost;
+    const ushort _id;
+    NgPost *const _ngPost;
     PostingJob *const _job;
 
     QThread _builderThread;
     QThread _connectionsThread;
 
-    ArticleBuilder          *_articleBuilder;
-    QVector<NntpConnection*> _nntpConnections; //!< we don't own them, we just move them to _connectionsThread
+    ArticleBuilder *_articleBuilder;
+    QVector<NntpConnection *>
+        _nntpConnections; //!< we don't own them, we just move them to _connectionsThread
 
-    QQueue<NntpArticle*> _articles;
-    QMutex               _secureArticles;
+    QQueue<NntpArticle *> _articles;
+    QMutex _secureArticles;
 
 public:
     Poster(PostingJob *job, ushort id);
@@ -85,25 +86,28 @@ public:
 
     bool isPosting() const;
 
-
 private:
     NntpArticle *_prepareNextArticle(const QString &threadName, bool fillQueue = true);
-
-
 };
 
-void Poster::lockQueue() { _secureArticles.lock(); }
-void Poster::unlockQueue() { _secureArticles.unlock(); }
+void Poster::lockQueue()
+{
+    _secureArticles.lock();
+}
+void Poster::unlockQueue()
+{
+    _secureArticles.unlock();
+}
 
-QString Poster::name() const { return _connectionsThread.objectName(); }
+QString Poster::name() const
+{
+    return _connectionsThread.objectName();
+}
 
 void Poster::startThreads()
 {
     _builderThread.start();
     _connectionsThread.start();
 }
-
-
-
 
 #endif // POSTER_H

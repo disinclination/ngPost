@@ -31,10 +31,10 @@ class FileUploader : public QObject
 
 private:
     QNetworkAccessManager &_netMgr;
-    QNetworkReply         *_reply;
-    QFileInfo              _nzbFilePath;
-    QFile                  _nzbFile;
-    QUrl                   _nzbUrl;
+    QNetworkReply *_reply;
+    QFileInfo _nzbFilePath;
+    QFile _nzbFile;
+    QUrl _nzbUrl;
 
 public:
     FileUploader(QNetworkAccessManager &netMgr, const QString &nzbFilePath);
@@ -52,7 +52,6 @@ private slots:
 
 private:
     inline QString url() const;
-
 };
 
 QString FileUploader::url() const
@@ -60,7 +59,7 @@ QString FileUploader::url() const
     if (_nzbUrl.isEmpty())
         return QString();
     else
-        return _nzbUrl.toString(QUrl::RemovePassword|QUrl::RemovePath);
+        return _nzbUrl.toString(QUrl::RemovePassword | QUrl::RemovePath);
 }
 
 #endif // FILEUPLOADER_H

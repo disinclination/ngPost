@@ -20,10 +20,9 @@
 #ifndef FOLDERSMONITORFORNEWFILES_H
 #define FOLDERSMONITORFORNEWFILES_H
 
-
-#include <QFileSystemWatcher>
 #include <QDateTime>
 #include <QFileInfoList>
+#include <QFileSystemWatcher>
 #include <QMap>
 #include <QSet>
 using AtomicBool = QAtomicInteger<unsigned short>; // 16 bit only (faster than using 8 bit variable...)
@@ -33,8 +32,8 @@ class FolderScan
 {
 public:
     const QString path;
-    QDateTime     lastUpdate;
-    PathSet       previousScan;
+    QDateTime lastUpdate;
+    PathSet previousScan;
 
     FolderScan(const QString &folderPath);
     FolderScan(const FolderScan &other) = delete;
@@ -50,12 +49,11 @@ class FoldersMonitorForNewFiles : public QObject
     friend class NgPost;
 
 private:
-    QFileSystemWatcher          _monitor;        //!< monitor
-    QMap<QString, FolderScan*>  _folders; //!< track files processed (their date might be > _lastCheck)
-    AtomicBool                  _stopListening;
+    QFileSystemWatcher _monitor;          //!< monitor
+    QMap<QString, FolderScan *> _folders; //!< track files processed (their date might be > _lastCheck)
+    AtomicBool _stopListening;
 
     static ulong sMSleep;
-
 
 public:
     FoldersMonitorForNewFiles(const QString &folderPath, QObject *parent = nullptr);
@@ -67,10 +65,8 @@ public:
 signals:
     void newFileToProcess(const QFileInfo &fileInfo);
 
-
 public slots:
     void onDirectoryChanged(const QString &folderPath);
-
 
 private:
     qint64 _pathSize(QFileInfo &fileInfo) const;

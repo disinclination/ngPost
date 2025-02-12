@@ -18,22 +18,22 @@
 //========================================================================
 
 #include "Poster.h"
-#include "NgPost.h"
-#include "PostingJob.h"
 #include "ArticleBuilder.h"
+#include "NgPost.h"
 #include "NntpConnection.h"
+#include "PostingJob.h"
 #include "nntp/NntpArticle.h"
 
-Poster::Poster(PostingJob *job, ushort id):
-    _id(id),
-    _ngPost(job->_ngPost),
-    _job(job),
-    _builderThread(),
-    _connectionsThread(),
-    _articleBuilder(new ArticleBuilder(this)),
-    _nntpConnections(),
-    _articles(),
-    _secureArticles()
+Poster::Poster(PostingJob *job, ushort id)
+    : _id(id)
+    , _ngPost(job->_ngPost)
+    , _job(job)
+    , _builderThread()
+    , _connectionsThread()
+    , _articleBuilder(new ArticleBuilder(this))
+    , _nntpConnections()
+    , _articles()
+    , _secureArticles()
 {
     _builderThread.setObjectName(QString("Builder #%1").arg(id));
     _connectionsThread.setObjectName(QString("Poster #%1").arg(id));
@@ -64,8 +64,7 @@ void Poster::addConnection(NntpConnection *connection)
 uint Poster::nbActiveConnections() const
 {
     uint nbActives = 0;
-    for (NntpConnection *con : _nntpConnections)
-    {
+    for (NntpConnection *con : _nntpConnections) {
         if (con->isConnected())
             ++nbActives;
     }
@@ -75,35 +74,35 @@ uint Poster::nbActiveConnections() const
 
 NntpArticle *Poster::getNextArticle(const QString &conPrefix)
 {
-
     QMutexLocker lock(&_secureArticles); // thread safety (coming from a posting thread)
 
     if (MB_LoadAtomic(_job->_stopPosting))
         return nullptr;
 
     if (_ngPost->debugFull())
-        _job->_log(QString("[%1][Poster::getNextArticle] _articles.size() = %2").arg(conPrefix).arg(_articles.size()));
+        _job->_log(QString("[%1][Poster::getNextArticle] _articles.size() = %2")
+                       .arg(conPrefix)
+                       .arg(_articles.size()));
 
     NntpArticle *article = nullptr;
     if (_articles.size())
         article = _articles.dequeue();
-    else
-    {
-        if (!MB_LoadAtomic(_job->_noMoreFiles))
-        {
+    else {
+        if (!MB_LoadAtomic(_job->_noMoreFiles)) {
             // we should never come here as the goal is to have articles prepared in advance in the queue
             if (_ngPost->debugFull())
-                _job->_log(QString("[%1][Poster::getNextArticle] no article prepared...").arg(conPrefix));
+                _job->_log(
+                    QString("[%1][Poster::getNextArticle] no article prepared...").arg(conPrefix));
 
             article = _prepareNextArticle(conPrefix, false);
         }
     }
 
     if (article)
-        emit _articleBuilder->scheduleNextArticle(); // schedule the preparation of another Article in the _builderThread
+        emit _articleBuilder
+            ->scheduleNextArticle(); // schedule the preparation of another Article in the _builderThread
 
     return article;
-
 }
 
 #ifdef __RELEASE_ARTICLES_WHEN_CON_FAILS__
@@ -115,17 +114,13 @@ void Poster::releaseArticle(const QString &conPrefix, NntpArticle *article)
 
     // the current NntpConnection releasing the Article will close
     // so we need at least another one that would try to post the Article
-    if (nbActiveConnections() > 2)
-    {
+    if (nbActiveConnections() > 2) {
         article->resetNbTrySending();
         _articles.prepend(article);
-    }
-    else
-    {
+    } else {
         _job->_error(QString("give up on Article: %1").arg(article->str()));
         emit article->failed(article->size());
     }
-
 }
 #endif
 
@@ -133,19 +128,22 @@ bool Poster::prepareArticlesInAdvance()
 {
     bool canProduceAll = true;
     int nbArticlesToPrepare = _nntpConnections.size();
-    for (int i = 0; i < nbArticlesToPrepare ; ++i)
-    {
-        if (!_prepareNextArticle(_builderThread.objectName()))
-        {
+    for (int i = 0; i < nbArticlesToPrepare; ++i) {
+        if (!_prepareNextArticle(_builderThread.objectName())) {
 #ifdef __DEBUG__
-            _job->_log(QString("[%1] prepareArticlesInAdvance : no more Articles to produce after i = %1").arg(_builderThread.objectName()).arg(i));
+            _job->_log(
+                QString("[%1] prepareArticlesInAdvance : no more Articles to produce after i = %1")
+                    .arg(_builderThread.objectName())
+                    .arg(i));
 #endif
             canProduceAll = false;
             break;
         }
     }
 #ifdef __DEBUG__
-    _job->_log(QString("[%1] prepareArticlesInAdvance: Article queue size:  %1").arg(_builderThread.objectName()).arg(_articles.size()));
+    _job->_log(QString("[%1] prepareArticlesInAdvance: Article queue size:  %1")
+                   .arg(_builderThread.objectName())
+                   .arg(_articles.size()));
 #endif
 
     return canProduceAll;
@@ -159,12 +157,10 @@ NntpArticle *Poster::_prepareNextArticle(const QString &threadName, bool fillQue
     return article;
 }
 
-
 bool Poster::isPosting() const
 {
     return _job->isPosting();
 }
-
 
 void Poster::stopThreads()
 {
