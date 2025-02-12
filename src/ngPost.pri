@@ -25,10 +25,10 @@ TRANSLATIONS = lang/ngPost_en.ts lang/ngPost_fr.ts lang/ngPost_es.ts lang/ngPost
 
 win32: {
     RC_ICONS += ngPost.ico
-
-# we need the console to be able to print stuff in command line mode...
-# we hide the console if we start in GUI mode
-    CONFIG += console
+    # Include console only if not using HMI (GUI)
+    !use_hmi {
+        CONFIG += console
+    }
 }
 
 macx: {
