@@ -56,12 +56,17 @@ jobs:
       - name: Deploy Qt DLLs with windeployqt
         run: |
           windeployqt src/release/ngPost.exe --release --qmldir src --compiler-runtime
-          
+
+      - name: Clean Build Artifacts
+        run: |
+          cd src/release
+          Remove-Item -Force *.obj, *.cpp, *.rc, *.res, *.h, *.qrc
+                
       - name: Upload Windows Binary
         uses: actions/upload-artifact@v4
         with:
           name: binary-windows
-          path: src/release/ngPost.exe
+          path: src/release/**
 
   build-macos:
     runs-on: macos-latest
