@@ -101,7 +101,7 @@ void NntpArticle::yEncBody(const char data[])
     std::string body = ss.str();
     _body = new char[body.size() + 1];
     std::copy(body.begin(), body.end(), _body);
-    _subject[body.size()] = '\0';
+    _body[body.size()] = '\0';
 }
 
 NntpArticle::~NntpArticle()
