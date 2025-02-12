@@ -38,7 +38,10 @@ NntpArticle::NntpArticle(NntpFile *file, uint part, qint64 pos, qint64 bytes,
         ss << _nntpFile->nameWithQuotes().toStdString() << " (" << part << "/" << _nntpFile->nbArticles() << ")";
 
         std::string subject = ss.str();
-        std::strncpy(_subject, subject.c_str(), sizeof(_subject) - 1); _subject[sizeof(_subject) - 1] = '\0';
+        _subject = new char[subject.size() + 1];
+        std::copy(subject.begin(), subject.end(), _subject);
+        _subject[subject.size()] = '\0';
+
     }
 }
 
@@ -96,7 +99,9 @@ void NntpArticle::yEncBody(const char data[])
     delete[] yencBody;
 
     std::string body = ss.str();
-    std::strncpy(_body, body.c_str(), sizeof(_body) - 1); _body[sizeof(_body) - 1] = '\0';
+    _body = new char[body.size() + 1];
+    std::copy(body.begin(), body.end(), _body);
+    _subject[body.size()] = '\0';
 }
 
 NntpArticle::~NntpArticle()
