@@ -48,10 +48,6 @@ jobs:
           qmake ngPost.pro -spec win32-g++ "CONFIG+=qtquickcompiler DEFINES+=__DEBUG__ UNICODE _UNICODE WIN32 MINGW_HAS_SECURE_API=1 __USE_HMI__ APP_VERSION=4.17 __USE_CONNECTION_TIMEOUT__ __COMPUTE_IMMEDIATE_SPEED__ __USE_TMP_RAM__ __RELEASE_ARTICLES_WHEN_CON_FAILS__ LOG_CONNECTION_STEPS LOG_NEWS_AUTH LOG_CONSTRUCTORS QT_DEPRECATED_WARNINGS QT_QML_DEBUG QT_WIDGETS_LIB QT_GUI_LIB QT_NETWORK_LIB QT_CORE_LIB"
           mingw32-make -f Makefile.Release
 
-      - name: Deploy Qt DLLs with windeployqt
-        run: |
-          windeployqt src/release/ngPost.exe --release
-
       - name: Upload Windows Binary
         uses: actions/upload-artifact@v4
         with:
