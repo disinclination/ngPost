@@ -1117,18 +1117,18 @@ Are you sure you want to quit?</source>
         <translation>&lt;br/&gt;El último lanzamiento es ahora &lt;b&gt;v%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/mbruel/ngPost/tree/master/release&apos;&gt;release directory&lt;/a&gt;</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Puedes descargarlo desde &lt;a href=&apos;https://github.com/mbruel/ngPost/tree/master/release&apos;&gt;directorio de liberación&lt;/a&gt;</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/disinclination/ngPost/tree/master/release&apos;&gt;release directory&lt;/a&gt;</source>
+        <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Puedes descargarlo desde &lt;a href=&apos;https://github.com/disinclination/ngPost/tree/master/release&apos;&gt;directorio de liberación&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="819"/>
-        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/mbruel/ngPost/releases/tag/v%1&apos;&gt;release directory&lt;/a&gt;</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;Puedes descargarlo desde &lt;a href=&apos;https://github.com/mbruel/ngPost/releases/tag/v%1&apos;&gt;directorio de liberación&lt;/a&gt;</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/disinclination/ngPost/releases/tag/v%1&apos;&gt;release directory&lt;/a&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Puedes descargarlo desde &lt;a href=&apos;https://github.com/disinclination/ngPost/releases/tag/v%1&apos;&gt;directorio de liberación&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="820"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Here are the full &lt;a href=&apos;https://github.com/mbruel/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;Aquí están completas&lt;a href=&apos;https://github.com/mbruel/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;Here are the full &lt;a href=&apos;https://github.com/disinclination/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Aquí están completas&lt;a href=&apos;https://github.com/disinclination/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="822"/>
@@ -2201,20 +2201,20 @@ O bien usa --par2_pct o establece PAR2_PCT o PAR2_ARGS en el fichero de configur
         <translation>Si desea traducir ngPost a su idioma, es fácil, por favor contácteme en Matthieu.Bruel@gmail.com</translation>
     </message>
     <message>
-        <source>for more details, cf &lt;a href=&quot;https://github.com/mbruel/ngPost/&quot;&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</source>
-        <translation type="vanished">para más detalles, véase &lt;a href=&quot;https://github.com/mbruel/ngPost/&quot;&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</translation>
+        <source>for more details, cf &lt;a href=&quot;https://github.com/disinclination/ngPost/&quot;&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</source>
+        <translation type="vanished">para más detalles, véase &lt;a href=&quot;https://github.com/disinclination/ngPost/&quot;&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>for more details, cf &lt;a href=&apos;https://github.com/mbruel/ngPost/&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</source>
-        <translation type="vanished">para más detalles, véase &lt;a href=&apos;https://github.com/mbruel/ngPost/&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</translation>
+        <source>for more details, cf &lt;a href=&apos;https://github.com/disinclination/ngPost/&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</source>
+        <translation type="vanished">para más detalles, véase &lt;a href=&apos;https://github.com/disinclination/ngPost/&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</translation>
     </message>
     <message>
         <source>invisible mode: full article obfuscation, unique feature making all Aricles completely unrecognizable without the nzb</source>
         <translation type="vanished">modo invisible: ofuscación completa del artículo, característica única que hace a todos los Arículos completamente irreconocibles sin el nzb</translation>
     </message>
     <message>
-        <source>for more details, cf https://github.com/mbruel/ngPost</source>
-        <translation type="vanished">para más detalles, véase https://github.com/mbruel/ngPost</translation>
+        <source>for more details, cf https://github.com/disinclination/ngPost</source>
+        <translation type="vanished">para más detalles, véase https://github.com/disinclination/ngPost</translation>
     </message>
 </context>
 <context>

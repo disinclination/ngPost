@@ -812,15 +812,15 @@ void NgPost::onCheckForNewVersion()
                 {
                     QString msg = tr("<center><h3>New version available on GitHUB</h3></center>");
                     msg += tr("<br/>The last release is now <b>v%1</b>").arg(lastRealease);
-                    msg += tr("<br/><br/>You can download it from the <a href='https://github.com/mbruel/ngPost/releases/tag/v%1'>release directory</a>").arg(lastRealease);
-                    msg += tr("<br/><br/>Here are the full <a href='https://github.com/mbruel/ngPost/blob/master/release_notes.txt'>release_notes</a>");
+                    msg += tr("<br/><br/>You can download it from the <a href='https://github.com/disinclination/ngPost/releases/tag/v%1'>release directory</a>").arg(lastRealease);
+                    msg += tr("<br/><br/>Here are the full <a href='https://github.com/disinclination/ngPost/blob/master/release_notes.txt'>release_notes</a>");
 
                     QMessageBox::information(_hmi, tr("New version available"), msg);
                 }
                 else
 #endif
                     qCritical() << "There is a new version available on GitHUB: v" << lastRealease
-                                << " (visit https://github.com/mbruel/ngPost/ to get it)";
+                                << " (visit https://github.com/disinclination/ngPost/ to get it)";
             }
 
             break; // no need to continue to parse the page

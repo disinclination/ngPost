@@ -1100,13 +1100,13 @@ Sind Sie sicher, dass Sie beenden möchten?</translation>
         <translation>&lt;br/&gt;Die letzte Veröffentlichung ist derzeit &lt;b&gt;v%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/mbruel/ngPost/tree/master/release&apos;&gt;release directory&lt;/a&gt;</source>
-        <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Sie können es aus dem &lt;a href=&apos;https://github.com/mbruel/ngPost/tree/master/release&apos;&gt;Release-Verzeichnis&lt;/a&gt; herunterladen</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/disinclination/ngPost/tree/master/release&apos;&gt;release directory&lt;/a&gt;</source>
+        <translation type="vanished">&lt;br/&gt;&lt;br/&gt;Sie können es aus dem &lt;a href=&apos;https://github.com/disinclination/ngPost/tree/master/release&apos;&gt;Release-Verzeichnis&lt;/a&gt; herunterladen</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="820"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Here are the full &lt;a href=&apos;https://github.com/mbruel/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;Hier sind die vollständigen &lt;a href=&apos;https://github.com/mbruel/ngPost/blob/master/release_notes.txt&apos;&gt;Veröffentlichungsnotizen&lt;/a&gt;</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;Here are the full &lt;a href=&apos;https://github.com/disinclination/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Hier sind die vollständigen &lt;a href=&apos;https://github.com/disinclination/ngPost/blob/master/release_notes.txt&apos;&gt;Veröffentlichungsnotizen&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="822"/>
@@ -1804,8 +1804,8 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="819"/>
-        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/mbruel/ngPost/releases/tag/v%1&apos;&gt;release directory&lt;/a&gt;</source>
-        <translation>&lt;br/&gt;&lt;br/&gt;Sie können es aus dem &lt;a href=&apos;https://github.com/mbruel/ngPost/releases/tag/v%1&apos;&gt;Release-Verzeichnis&lt;/a&gt; herunterladen</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/disinclination/ngPost/releases/tag/v%1&apos;&gt;release directory&lt;/a&gt;</source>
+        <translation>&lt;br/&gt;&lt;br/&gt;Sie können es aus dem &lt;a href=&apos;https://github.com/disinclination/ngPost/releases/tag/v%1&apos;&gt;Release-Verzeichnis&lt;/a&gt; herunterladen</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="2365"/>
@@ -2229,16 +2229,16 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <translation>Wenn Sie ngPost in Ihre Sprache übersetzen möchten, geht das ganz einfach. Kontaktieren Sie mich bitte unter Matthieu.Bruel@gmail.com</translation>
     </message>
     <message>
-        <source>for more details, cf &lt;a href=&quot;https://github.com/mbruel/ngPost/&quot;&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</source>
-        <translation type="vanished">Für weitere Einzelheiten, siehe &lt;a href=&quot;https://github.com/mbruel/ngPost/&quot;&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</translation>
+        <source>for more details, cf &lt;a href=&quot;https://github.com/disinclination/ngPost/&quot;&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</source>
+        <translation type="vanished">Für weitere Einzelheiten, siehe &lt;a href=&quot;https://github.com/disinclination/ngPost/&quot;&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>for more details, cf &lt;a href=&apos;https://github.com/mbruel/ngPost/&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</source>
-        <translation type="vanished">Für weitere Einzelheiten, siehe &lt;a href=&apos;https://github.com/mbruel/ngPost/&gt;https://github.com/mbruel/ngPost&lt;/a&gt;</translation>
+        <source>for more details, cf &lt;a href=&apos;https://github.com/disinclination/ngPost/&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</source>
+        <translation type="vanished">Für weitere Einzelheiten, siehe &lt;a href=&apos;https://github.com/disinclination/ngPost/&gt;https://github.com/disinclination/ngPost&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>for more details, cf https://github.com/mbruel/ngPost</source>
-        <translation type="vanished">Für weitere Einzelheiten, siehe https://github.com/mbruel/ngPost</translation>
+        <source>for more details, cf https://github.com/disinclination/ngPost</source>
+        <translation type="vanished">Für weitere Einzelheiten, siehe https://github.com/disinclination/ngPost</translation>
     </message>
 </context>
 <context>

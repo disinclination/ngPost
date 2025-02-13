@@ -1109,13 +1109,13 @@ Weet je zeker dat je wilt stoppen?</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="819"/>
-        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/mbruel/ngPost/releases/tag/v%1&apos;&gt;release directory&lt;/a&gt;</source>
-        <translation>&lt;br/&gt; &lt;br/&gt; Je kunt het downloaden van &lt;a href=&apos;https://github.com/mbruel/ngPost/releases/tag/v%1&apos;&gt; release directory &lt;/a&gt;</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;You can download it from the &lt;a href=&apos;https://github.com/disinclination/ngPost/releases/tag/v%1&apos;&gt;release directory&lt;/a&gt;</source>
+        <translation>&lt;br/&gt; &lt;br/&gt; Je kunt het downloaden van &lt;a href=&apos;https://github.com/disinclination/ngPost/releases/tag/v%1&apos;&gt; release directory &lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="820"/>
-        <source>&lt;br/&gt;&lt;br/&gt;Here are the full &lt;a href=&apos;https://github.com/mbruel/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</source>
-        <translation>&lt;br/&gt; &lt;br/&gt; Hier zijn de volledige &lt;a href=&apos;https://github.com/mbruel/ngPost/blob/master/release_notes.txt&apos;&gt; release_notes &lt;/a&gt;</translation>
+        <source>&lt;br/&gt;&lt;br/&gt;Here are the full &lt;a href=&apos;https://github.com/disinclination/ngPost/blob/master/release_notes.txt&apos;&gt;release_notes&lt;/a&gt;</source>
+        <translation>&lt;br/&gt; &lt;br/&gt; Hier zijn de volledige &lt;a href=&apos;https://github.com/disinclination/ngPost/blob/master/release_notes.txt&apos;&gt; release_notes &lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../NgPost.cpp" line="822"/>
