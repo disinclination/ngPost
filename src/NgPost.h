@@ -1,21 +1,9 @@
-//========================================================================
-//
-// Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/disinclination/ngPost
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, version 3..
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>
-//
-//========================================================================
+/*
+ * Copyright (c) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
+ * Copyright (c) 2025 disinclination
+ * Licensed under the GNU General Public License v3.0
+ */
+
 
 #ifndef NGPOST_H
 #define NGPOST_H
@@ -51,6 +39,9 @@ class NzbCheck;
 #define NB_ARTICLES_TO_PREPARE_PER_CONNECTION 3
 
 #include <QTimer>
+#include <random>
+#include <string>
+#include <vector>
 
 /*!
  * \brief The NgPost is responsible to manage the posting of all files, know when it is finished and write the nzb
@@ -736,14 +727,36 @@ QString NgPost::randomFrom(ushort length) const
 
 std::string NgPost::randomStdFrom(ushort length)
 {
+    const std::string sRandomAlphabet = "abcdefghijklmnopqrstuvwxyz";
+    const std::vector<std::string> tlds = {
+        ".com", ".net", ".org", ".io", ".us", ".uk", ".de", ".jp", ".fr", ".au",
+        ".ca", ".cn", ".es", ".it", ".nl", ".ru", ".ch", ".se", ".no", ".in",
+        ".br", ".za", ".kr", ".mx", ".tr", ".be", ".pl", ".gr", ".fi", ".dk",
+        ".tw", ".id", ".hk", ".sg", ".my", ".nz", ".ar", ".cl", ".pt", ".cz",
+        ".ro", ".hu", ".ie", ".il", ".th", ".sa", ".ae", ".is", ".pk", ".vn"
+    };
+
     size_t nbLetters = sRandomAlphabet.length();
+
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    std::uniform_int_distribution<size_t> distAlphabet(0, nbLetters - 1);
+    std::uniform_int_distribution<size_t> distTLDs(0, tlds.size() - 1);
+
     std::string randomFrom;
-    randomFrom.reserve(length + sArticleIdSignature.length() + 5);
+    std::string signature;
+
     for (size_t i = 0; i < length; ++i)
-        randomFrom.push_back(sRandomAlphabet.at(std::rand() % nbLetters));
+        randomFrom.push_back(sRandomAlphabet[distAlphabet(engine)]);
+
     randomFrom.push_back('@');
-    randomFrom.append(sArticleIdSignature);
-    randomFrom.append(".com");
+
+    for (size_t i = 0; i < length; ++i)
+        signature.push_back(sRandomAlphabet[distAlphabet(engine)]);
+
+    randomFrom.append(signature);
+
+    randomFrom.append(tlds[distTLDs(engine)]);
 
     return randomFrom;
 }
