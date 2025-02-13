@@ -1,21 +1,9 @@
-//========================================================================
-//
-// Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, version 3..
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>
-//
-//========================================================================
+/*
+ * Copyright (c) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
+ * Copyright (c) 2025 disinclination
+ * Licensed under the GNU General Public License v3.0
+ */
+
 
 #include "NgPost.h"
 #include "PostingJob.h"
@@ -52,7 +40,7 @@
 
 const char *NgPost::sAppName          = "ngPost";
 const QString NgPost::sVersion        = QString::number(4.17);
-const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/mbruel/ngPost/master/src/ngPost.pri";
+const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/disinclination/ngPost/master/src/ngPost.pri";
 
 const QString NgPost::sMainThreadName     = "MainThread";
 const char *NgPost::sFolderMonitoringName = QT_TRANSLATE_NOOP("NgPost", "Auto Posting");

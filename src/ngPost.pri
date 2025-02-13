@@ -75,6 +75,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        
         ArticleBuilder.cpp \
         FileUploader.cpp \
         FoldersMonitorForNewFiles.cpp \
@@ -88,6 +89,7 @@ SOURCES += \
         nntp/Nntp.cpp \
         nntp/NntpArticle.cpp \
         nntp/NntpFile.cpp \
+		utils/WindowsUtils.cpp \
         utils/CmdOrGuiApp.cpp \
         utils/Yenc.cpp
 
@@ -111,6 +113,7 @@ HEADERS += \
     nntp/NntpArticle.h \
     nntp/NntpFile.h \
     nntp/NntpServerParams.h \
+	utils/WindowsUtils.h \
     utils/CmdOrGuiApp.h \
     utils/Macros.h \
     utils/PureStaticClass.h \
