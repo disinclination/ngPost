@@ -696,7 +696,7 @@ void NgPost::doNzbPostCMD(PostingJob *job)
             connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
                 qDebug() << "Process finished with code:" << exitCode << "and status:" << exitStatus;
                 process->deleteLater();
-                });
+            });
 
             process->start(cmd, args);
 
