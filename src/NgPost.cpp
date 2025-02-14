@@ -34,6 +34,8 @@
 #include <QRegularExpression>
 #include <QDir>
 #include <QNetworkProxy>
+
+#include "nntp/NntpFile.h"
 #ifdef __USE_TMP_RAM__
   #include <QStorageInfo>
 #endif
@@ -208,6 +210,7 @@ const QList<QCommandLineOption> NgPost::sCmdOptions = {
 };
 
 const QMap<NgPost::PostCmdPlaceHolders, QString> NgPost::sPostCmdPlaceHolders = {
+	{PostCmdPlaceHolders::originalPath,     "__originalPath__"},
     {PostCmdPlaceHolders::nzbPath,          "__nzbPath__"},
     {PostCmdPlaceHolders::nzbName,          "__nzbName__"},
     {PostCmdPlaceHolders::rarName,          "__rarName__"},
@@ -656,6 +659,15 @@ void NgPost::doNzbPostCMD(PostingJob *job)
         {
             QString fullCmd(nzbPostCmd);
             fullCmd.replace("%1",                   job->nzbFilePath()); // for backwards compatibility
+
+            fullCmd.replace(sPostCmdPlaceHolders[PostCmdPlaceHolders::originalPath],
+#if defined( Q_OS_WIN )
+                QString(job->originalDirectory()).replace("/", "\\")
+#else
+                job->originalDirectory()
+#endif
+            );
+
             fullCmd.replace(sPostCmdPlaceHolders[PostCmdPlaceHolders::nzbPath],
         #if defined( Q_OS_WIN )
                     QString(job->nzbFilePath()).replace("/", "\\")
@@ -678,9 +690,18 @@ void NgPost::doNzbPostCMD(PostingJob *job)
 #endif
             QString     cmd  = args.takeFirst();
             qDebug() << "cmd: " << cmd << ", args: " << args;
-            int res = QProcess::execute(cmd, args);
+
+            QProcess* process = new QProcess(this);
+
+            connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
+                qDebug() << "Process finished with code:" << exitCode << "and status:" << exitStatus;
+                process->deleteLater();
+            });
+
+            process->start(cmd, args);
+
             if (debugMode())
-                _log(tr("NZB Post cmd: %1 exitcode: %2").arg(fullCmd).arg(res));
+                _log(tr("NZB Post cmd: %1").arg(fullCmd));
             else
                 _log(fullCmd);
         }
@@ -2522,7 +2543,8 @@ void NgPost::saveConfig()
                << "\n"
                << tr("## execute a command or script at the end of each post (see examples)") << "\n"
                << tr("## you can use several post commands by defining several NZB_POST_CMD") << "\n"
-               << tr("## here is the list of the available placehoders") << "\n"
+               << tr("## here is the list of the available placeholders") << "\n"
+    		   << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::originalPath] << "    : " << tr("full path of the source file") << "\n"
                << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::nzbPath] <<"          : " << tr("full path of the written nzb file") << "\n"
                << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::nzbName] <<"          : " << tr("name of the nzb without the extension (original source name)") << "\n"
                << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::rarName] <<"          : " << tr("name of the archive files (in case of obfuscation)") << "\n"

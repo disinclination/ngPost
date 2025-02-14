@@ -153,6 +153,7 @@ private:
     static const QMap<Opt, QString> sOptionNames;
 
     enum class PostCmdPlaceHolders {
+        originalPath,
         nzbPath,
         nzbName,
         rarName,

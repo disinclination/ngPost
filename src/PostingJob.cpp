@@ -379,6 +379,11 @@ void PostingJob::_postFiles()
         _postWidget->setPosting();
 #endif
 
+    for (const QFileInfo& file : _files) {
+        auto fileDir = file.absoluteDir();
+        _originalDirectory = fileDir.absolutePath();
+    }
+
     if (_doCompress) {
         QStringList archiveNames;
         _files.clear();
@@ -402,6 +407,9 @@ void PostingJob::_postFiles()
         }
         emit archiveFileNames(archiveNames);
     }
+
+    
+
     _initPosting();
 
     if (_nbThreads > QThread::idealThreadCount())
