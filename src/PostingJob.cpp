@@ -402,6 +402,11 @@ void PostingJob::_postFiles()
         }
         emit archiveFileNames(archiveNames);
     }
+
+    //Set the original file path, from first file
+    if (!_files.isEmpty())
+        _originalDirectory = _files.first().absolutePath();
+
     _initPosting();
 
     if (_nbThreads > QThread::idealThreadCount())

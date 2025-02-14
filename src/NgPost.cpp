@@ -662,9 +662,9 @@ void NgPost::doNzbPostCMD(PostingJob *job)
 
             fullCmd.replace(sPostCmdPlaceHolders[PostCmdPlaceHolders::originalPath],
 #if defined( Q_OS_WIN )
-                QString(job->_nntpFile->directoryPath()).replace("/", "\\")
+                QString(job->_originalDirectory).replace("/", "\\")
 #else
-                job->_nntpFile->path()
+                job->_originalDirectory
 #endif
             );
 

@@ -97,11 +97,10 @@ QString NntpFile::path() const
 	return _file.absoluteFilePath();
 }
 
-inline QString NntpFile::directoryPath() const
+QString NntpFile::directoryPath() const
 {
     return _file.absolutePath();
 }
-
 
 QString NntpFile::name() const {
     return QString("[%1/%2] %3").arg(_num, _padding, 10,  QChar('0')).arg(

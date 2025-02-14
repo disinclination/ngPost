@@ -94,6 +94,8 @@ private:
     uint _nbFiles;                     //!< number of files to post in this iteration
     uint _nbPosted;                    //!< number of files posted
 
+    QString _originalDirectory;
+
     QString _nzbFilePath;
     QFile *_nzb;            //!< nzb file that will be filled on the fly when a file is fully posted
     QTextStream _nzbStream; //!< txt stream for the nzb file
