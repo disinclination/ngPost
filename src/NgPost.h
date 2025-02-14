@@ -64,7 +64,6 @@ class NgPost : public QObject, public CmdOrGuiApp
     friend class PostingWidget;
     friend class AutoPostWidget;
     friend class PostingJob;
-    friend class AboutNgPost;
 
 public:
     enum class Opt {

@@ -20,7 +20,6 @@
 #include "PostingWidget.h"
 #include "ui_PostingWidget.h"
 #include "MainWindow.h"
-#include "AboutNgPost.h"
 #include "NgPost.h"
 #include "PostingJob.h"
 #include "nntp/NntpFile.h"
