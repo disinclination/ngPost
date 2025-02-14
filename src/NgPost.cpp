@@ -35,7 +35,7 @@
 #include <QDir>
 #include <QNetworkProxy>
 
-#include "NntpFile.h"
+#include "nntp/NntpFile.h"
 #ifdef __USE_TMP_RAM__
   #include <QStorageInfo>
 #endif
