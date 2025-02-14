@@ -662,9 +662,9 @@ void NgPost::doNzbPostCMD(PostingJob *job)
 
             fullCmd.replace(sPostCmdPlaceHolders[PostCmdPlaceHolders::originalPath],
 #if defined( Q_OS_WIN )
-                QString(job->_originalDirectory).replace("/", "\\")
+                QString(job->originalDirectory()).replace("/", "\\")
 #else
-                job->_originalDirectory
+                job->originalDirectory()
 #endif
             );
 
@@ -690,9 +690,18 @@ void NgPost::doNzbPostCMD(PostingJob *job)
 #endif
             QString     cmd  = args.takeFirst();
             qDebug() << "cmd: " << cmd << ", args: " << args;
-            int res = QProcess::execute(cmd, args);
+
+            QProcess* process = new QProcess(this);
+
+            connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
+                qDebug() << "Process finished with code:" << exitCode << "and status:" << exitStatus;
+                process->deleteLater();
+                });
+
+            process->start(cmd, args);
+
             if (debugMode())
-                _log(tr("NZB Post cmd: %1 exitcode: %2").arg(fullCmd).arg(res));
+                _log(tr("NZB Post cmd: %1").arg(fullCmd));
             else
                 _log(fullCmd);
         }

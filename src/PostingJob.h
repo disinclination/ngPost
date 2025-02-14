@@ -221,6 +221,7 @@ public:
     inline bool isPaused() const;
 
     inline const QString &nzbFilePath() const;
+    inline const QString &originalDirectory() const;
 
     inline static QString humanSize(double size);
 
@@ -486,6 +487,11 @@ bool PostingJob::isPaused() const
 const QString &PostingJob::nzbFilePath() const
 {
     return _nzbFilePath;
+}
+
+const QString& PostingJob::originalDirectory() const
+{
+    return _originalDirectory;
 }
 
 #ifdef __COMPUTE_IMMEDIATE_SPEED__
