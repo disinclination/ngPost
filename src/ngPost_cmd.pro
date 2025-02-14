@@ -132,7 +132,6 @@ RESOURCES += \
 
 use_hmi {
 SOURCES += \
-    hmi/AboutNgPost.cpp \
     hmi/AutoPostWidget.cpp \
     hmi/CheckBoxCenterWidget.cpp \
     hmi/PostingWidget.cpp \
@@ -140,7 +139,6 @@ SOURCES += \
     hmi/MainWindow.cpp
 
 HEADERS += \
-    hmi/AboutNgPost.h \
     hmi/AutoPostWidget.h \
     hmi/CheckBoxCenterWidget.h \
     hmi/PostingWidget.h \
@@ -148,7 +146,6 @@ HEADERS += \
     hmi/MainWindow.h
 
 FORMS += \
-    hmi/AboutNgPost.ui \
     hmi/AutoPostWidget.ui \
     hmi/MainWindow.ui \
     hmi/PostingWidget.ui
