@@ -53,7 +53,7 @@ jobs:
       - name: Clean Build Artifacts
         run: |
           cd src/release
-          del /Q *.obj, *.cpp, *.rc, *.res, *.h, *.qrc
+          Remove-Item -Force .obj,  .cpp, .rc,  .res, .h,  .qrc
       - name: Upload Windows Binary
         uses: actions/upload-artifact@v4
         with:
