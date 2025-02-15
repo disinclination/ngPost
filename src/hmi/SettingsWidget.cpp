@@ -16,6 +16,8 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
 
+    connect(ui->anonymousProxyCheckBox, &QCheckBox::toggled, this, &SettingsWidget::OnAnonymousProxyToggled);
+
     // Make the dialog modal
     setModal(true);
 }
@@ -23,4 +25,10 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 SettingsWidget::~SettingsWidget()
 {
     delete ui;
+}
+
+void SettingsWidget::OnAnonymousProxyToggled(){
+    qDebug() << "Anonymous proxy toggled";
+    ui->proxyUsernameTextField->setDisabled(ui->anonymousProxyCheckBox->isChecked());
+    ui->proxyPasswordTextField->setDisabled(ui->anonymousProxyCheckBox->isChecked());
 }

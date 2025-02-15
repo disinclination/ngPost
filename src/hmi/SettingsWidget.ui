@@ -43,7 +43,7 @@
      <rect>
       <x>120</x>
       <y>44</y>
-      <width>51</width>
+      <width>88</width>
       <height>23</height>
      </rect>
     </property>
@@ -164,7 +164,7 @@
      <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="proxyUsernameTextField">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -190,7 +190,7 @@
      <string>Password:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="proxyPasswordTextField">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -206,7 +206,7 @@
      <string>Password</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_2">
+   <widget class="QCheckBox" name="anonymousProxyCheckBox">
     <property name="geometry">
      <rect>
       <x>10</x>

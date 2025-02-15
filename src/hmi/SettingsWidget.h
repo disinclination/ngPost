@@ -15,6 +15,9 @@ public:
     explicit SettingsWidget(QWidget *parent = nullptr);
     ~SettingsWidget();
 
+private slots:
+    void OnAnonymousProxyToggled();
+
 private:
     Ui::SettingsWidget *ui;
 };
