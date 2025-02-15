@@ -453,33 +453,6 @@
    <item>
     <layout class="QHBoxLayout" name="postLayout">
      <item>
-      <spacer name="horizontalSpacer_9">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="aboutButton">
-       <property name="toolTip">
-        <string>About ngPost</string>
-       </property>
-       <property name="text">
-        <string>About</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../resources/resources.qrc">
-         <normaloff>:/icons/about.png</normaloff>:/icons/about.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer_14">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
@@ -532,19 +505,6 @@
      </item>
      <item>
       <spacer name="horizontalSpacer_15">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_10">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
