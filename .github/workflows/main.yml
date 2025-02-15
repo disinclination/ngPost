@@ -91,12 +91,6 @@ jobs:
         with:
           path: all-binaries
 
-      - name: Rename and Organize Binaries
-        run: |
-          mv all-binaries/$GITHUB_ACTION/binary-linux all-binaries/linux-${{ github.event.inputs.version }}
-          mv all-binaries/$GITHUB_ACTION/binary-windows all-binaries/windows-${{ github.event.inputs.version }}
-          mv all-binaries/$GITHUB_ACTION/binary-macos all-binaries/macOS-${{ github.event.inputs.version }}
-
       - name: Upload Final Packed Binaries
         uses: actions/upload-artifact@v4
         with:
