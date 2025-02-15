@@ -44,13 +44,13 @@ void dispFolderSize(const QFileInfo &folderPath)
 }
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     // disable SSL warnings
     QLoggingCategory::setFilterRules("qt.network.ssl.warning=false");
 
-    signal(SIGINT, &handleShutdown);  // shut down on ctrl-c
-    signal(SIGTERM, &handleShutdown); // shut down on killall
+    signal(SIGINT, &handleShutdown);// shut down on ctrl-c
+    signal(SIGTERM, &handleShutdown);// shut down on killall
 #ifdef __linux__
     signal(SIGUSR1, &handleSigUsr); // kill -s SIGUSR1 $(pidof ngPost) to hide/show the GUI
 #endif
@@ -61,18 +61,21 @@ int main(int argc, char *argv[])
 
     int exitCode = 0;
 #ifdef __USE_HMI__
-    if (app->useHMI()) {
-#if defined(Q_OS_WIN)
+    if (app->useHMI())
+    {
+#if defined( Q_OS_WIN )
         ::ShowWindow(::GetConsoleWindow(), SW_HIDE); //hide console window
 #endif
         app->checkSupportSSL();
         exitCode = app->startHMI();
-    } else if (app->parseCommandLine(argc, argv))
+}
+    else if (app->parseCommandLine(argc, argv))
 #else
     if (app->parseCommandLine(argc, argv))
 #endif
     {
-        if (app->checkSupportSSL()) {
+        if (app->checkSupportSSL())
+        {
             exitCode = app->startEventLoop();
 
             if (app->nzbCheck())
@@ -82,7 +85,9 @@ int main(int argc, char *argv[])
         std::cout << app->appName() << " closed properly!\n";
         std::cout.flush();
 #endif
-    } else {
+    }
+    else
+    {
 #ifdef __DEBUG__
         std::cout << "Nothing to do...\n";
         std::cout.flush();
@@ -94,7 +99,7 @@ int main(int argc, char *argv[])
 
     delete app;
     return exitCode;
-}
+        }
 
 void handleShutdown(int signal)
 {
