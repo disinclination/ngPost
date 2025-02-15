@@ -120,3 +120,5 @@ RESOURCES += \
     resources/resources.qrc \
     resources/version.rc
 
+FORMS +=
+

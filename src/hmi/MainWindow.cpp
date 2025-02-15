@@ -21,6 +21,7 @@
 #include "ui_MainWindow.h"
 #include "PostingWidget.h"
 #include "AutoPostWidget.h"
+#include "SettingsWidget.h"
 #include "NgPost.h"
 #include "nntp/NntpServerParams.h"
 #include "nntp/NntpArticle.h"
@@ -142,12 +143,6 @@ void MainWindow::init(NgPost *ngPost)
 //    _ui->postTabWidget->setCurrentIndex(1);
 
     setJobLabel(1);
-
-
-    for (const QString &lang : _ngPost->languages())
-        _ui->langCB->addItem(QIcon(QString(":/icons/flag_%1.png").arg(lang.toUpper())), lang.toUpper(), lang);
-    _ui->langCB->setCurrentText(_ngPost->_lang.toUpper());
-    connect(_ui->langCB, &QComboBox::currentTextChanged, this, &MainWindow::onLangChanged);
 
     _initServerBox();
     _initPostingBox();
@@ -424,7 +419,7 @@ void MainWindow::_initServerBox()
 void MainWindow::_initPostingBox()
 {
     connect(_ui->shutdownCB,        &QAbstractButton::toggled, this, &MainWindow::onShutdownToggled);
-    connect(_ui->saveButton,        &QAbstractButton::clicked, this, &MainWindow::onSaveConfig);
+    connect(_ui->saveButton,        &QAbstractButton::clicked, this, &MainWindow::onSettingsClicked);
 
     connect(_ui->genPoster,         &QAbstractButton::clicked, this, &MainWindow::onGenPoster);
     connect(_ui->obfuscateMsgIdCB,  &QAbstractButton::toggled, this, &MainWindow::onObfucateToggled);
@@ -795,23 +790,10 @@ void MainWindow::onDebugValue(int value)
     _ngPost->setDebug(static_cast<ushort>(value));
 }
 
-
-void MainWindow::onSaveConfig()
+void MainWindow::onSettingsClicked()
 {
-    updateServers();
-    updateParams();
-    int currentTabIdx = _ui->postTabWidget->currentIndex();
-    if (currentTabIdx == 0)
-        _quickJobTab->udatePostingParams();
-    else if (currentTabIdx == 1)
-        _autoPostTab->udatePostingParams();
-    else
-    {
-        PostingWidget *postWidget = _getPostWidget(currentTabIdx);
-        if (postWidget)
-            postWidget->udatePostingParams();
-    }
-    _ngPost->saveConfig();
+    SettingsWidget settingsDialog;
+    settingsDialog.exec();
 }
 
 void MainWindow::onJobTabClicked(int index)
@@ -877,12 +859,6 @@ void MainWindow::onNzbPathClicked()
 
     if (!path.isEmpty())
         _ui->nzbPathEdit->setText(path);
-}
-
-void MainWindow::onLangChanged(const QString &lang)
-{
-    qDebug() << "Changing lang to " << lang;
-    _ngPost->changeLanguage(lang.toLower());
 }
 
 void MainWindow::onShutdownToggled(bool checked)

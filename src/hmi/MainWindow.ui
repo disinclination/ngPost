@@ -483,21 +483,7 @@
             </spacer>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QLabel" name="langLbl">
-               <property name="toolTip">
-                <string>language</string>
-               </property>
-               <property name="text">
-                <string>Lang:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="langCB"/>
-             </item>
-            </layout>
+            <layout class="QHBoxLayout" name="horizontalLayout_7"/>
            </item>
            <item>
             <widget class="QPushButton" name="saveButton">
@@ -505,11 +491,11 @@
               <string>save all the parameters including servers in the config file</string>
              </property>
              <property name="text">
-              <string>Save</string>
+              <string>Settings</string>
              </property>
              <property name="icon">
               <iconset resource="../resources/resources.qrc">
-               <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+               <normaloff>:/icons/auto.png</normaloff>:/icons/auto.png</iconset>
              </property>
             </widget>
            </item>

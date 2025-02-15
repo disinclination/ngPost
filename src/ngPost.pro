@@ -33,3 +33,12 @@ FORMS += \
     hmi/MainWindow.ui \
     hmi/PostingWidget.ui
 }
+
+FORMS += \
+    hmi/SettingsWidget.ui
+
+HEADERS += \
+    hmi/SettingsWidget.h
+
+SOURCES += \
+    hmi/SettingsWidget.cpp

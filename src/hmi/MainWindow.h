@@ -138,7 +138,7 @@ private slots:
     void onDebugToggled(bool checked);
     void onDebugValue(int value);
 
-    void onSaveConfig();
+    void onSettingsClicked();
 
     void onJobTabClicked(int index);
     void onCloseJob(int index);
@@ -146,8 +146,6 @@ private slots:
     void toBeImplemented();
 
     void onNzbPathClicked();
-
-    void onLangChanged(const QString &lang);
 
     void onShutdownToggled(bool checked);
 
