@@ -41,7 +41,7 @@
 #endif
 
 const char *NgPost::sAppName          = "ngPost";
-const QString NgPost::sVersion        = QString::number(4.17);
+const QString NgPost::sVersion        = "5.0";
 const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/disinclination/ngPost/master/src/ngPost.pri";
 
 const QString NgPost::sMainThreadName     = "MainThread";
