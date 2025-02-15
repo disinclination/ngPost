@@ -129,6 +129,9 @@ jobs:
           name: compiled-binaries
           path: binaries
 
+      - name: List downloaded files
+        run: ls -R binaries
+
       - name: Upload Linux Binary to Release
         uses: softprops/action-gh-release@v2
         with:
