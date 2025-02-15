@@ -1,6 +1,6 @@
 <div align="center">
 	<img width="80" height="80" src="https://raw.githubusercontent.com/disinclination/ngPost/master/src/resources/icons/ngPost.png" alt="ngPost"/>
- 	<h3 align="center">ngPost - 4.17.0</h3>
+ 	<h3 align="center">ngPost - 5.0.0</h3>
 	<img alt="Codacy grade" src="https://img.shields.io/codacy/grade/e790647f2eae44898d760b68ee6f5b78?style=for-the-badge">
 	<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/disinclination/ngPost?style=for-the-badge">
 	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/disinclination/ngPost?style=for-the-badge">
@@ -15,7 +15,7 @@
 This application is a high-speed command line and GUI Usenet poster for binaries, designed for secure and efficient data posting. Developed with C++17 and [Qt 6.8.2](https://www.qt.io/blog/qt-6.8.2-released), it features file compression, par2 file generation, and a posting queue for managing multiple uploads. The tool automates tasks by scanning folders and posting files, with options for executing commands post-upload and shutting down the computer upon completion.
 
 
-![ngPost_v4.3](https://raw.githubusercontent.com/disinclination/ngPost/master/pics/ngPost_v4.3.png)
+![ngPost_v5.0.0](https://github.com/disinclination/ngPost/blob/rc-4.17/pics/ngPost_v4.17.png?raw=true)
 
 # Getting Started
 
