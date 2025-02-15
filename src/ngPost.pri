@@ -5,7 +5,7 @@ DEFINES += "APP_VERSION=\"4.17\""
 INCLUDEPATH += $$PWD
 TARGET = ngPost
 TEMPLATE = app
-CONFIG += c++14
+CONFIG += c++17
 CONFIG -= app_bundle
 
 DEFINES += __USE_CONNECTION_TIMEOUT__
@@ -28,9 +28,7 @@ win32: {
     RC_ICONS = ngPost.ico
     RC_FILE = resources/version.rc
     # Include console only if not using HMI (GUI)
-    !use_hmi {
-        CONFIG += console
-    }
+    CONFIG += console
 }
 
 macx: {
@@ -88,7 +86,6 @@ SOURCES += \
         nntp/Nntp.cpp \
         nntp/NntpArticle.cpp \
         nntp/NntpFile.cpp \
-		utils/WindowsUtils.cpp \
         utils/CmdOrGuiApp.cpp \
         utils/Yenc.cpp
 
@@ -112,7 +109,6 @@ HEADERS += \
     nntp/NntpArticle.h \
     nntp/NntpFile.h \
     nntp/NntpServerParams.h \
-	utils/WindowsUtils.h \
     utils/CmdOrGuiApp.h \
     utils/Macros.h \
     utils/PureStaticClass.h \
