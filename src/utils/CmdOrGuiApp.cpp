@@ -1,7 +1,7 @@
 //========================================================================
 //
 // Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
+// This file is a part of ngPost : https://github.com/disinclination/ngPost
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ void CmdOrGuiApp::checkForNewVersion()
 {
     // No need here
     // check ngPost implementation if required
-    // https://github.com/mbruel/ngPost
+    // https://github.com/disinclination/ngPost
 }
 
 int CmdOrGuiApp::startEventLoop() { return _app->exec(); }

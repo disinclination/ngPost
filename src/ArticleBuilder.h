@@ -1,7 +1,7 @@
 //========================================================================
 //
 // Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
+// This file is a part of ngPost : https://github.com/disinclination/ngPost
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -40,26 +40,23 @@ class ArticleBuilder : public QObject
     Q_OBJECT
 
 private:
-    NgPost     *const _ngPost;
-    Poster     *const _poster;
+    NgPost *const _ngPost;
+    Poster *const _poster;
     PostingJob *const _job;
 
-    char *_buffer;   //!< buffer to read the current file to build an Article
+    char *_buffer; //!< buffer to read the current file to build an Article
 
 signals:
     void scheduleNextArticle();
 
-
 private slots:
     void onPrepareNextArticle();
-
 
 public:
     ArticleBuilder(Poster *poster, QObject *parent = nullptr);
     ~ArticleBuilder();
 
     NntpArticle *getNextArticle(const QString &threadName);
-
 };
 
 #endif // ARTICLEBUILDER_H

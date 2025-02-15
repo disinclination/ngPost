@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 QT += core network
 
-DEFINES += "APP_VERSION=\"4.16\""
+DEFINES += "APP_VERSION=\"5.0\""
 #CONFIG  += use_hmi
 
 INCLUDEPATH += $$PWD
@@ -132,7 +131,6 @@ RESOURCES += \
 
 use_hmi {
 SOURCES += \
-    hmi/AboutNgPost.cpp \
     hmi/AutoPostWidget.cpp \
     hmi/CheckBoxCenterWidget.cpp \
     hmi/PostingWidget.cpp \
@@ -140,7 +138,6 @@ SOURCES += \
     hmi/MainWindow.cpp
 
 HEADERS += \
-    hmi/AboutNgPost.h \
     hmi/AutoPostWidget.h \
     hmi/CheckBoxCenterWidget.h \
     hmi/PostingWidget.h \
@@ -148,13 +145,10 @@ HEADERS += \
     hmi/MainWindow.h
 
 FORMS += \
-    hmi/AboutNgPost.ui \
     hmi/AutoPostWidget.ui \
     hmi/MainWindow.ui \
     hmi/PostingWidget.ui
 }
-=======
 QT -= gui
 CONFIG += console
 include(ngPost.pri)
->>>>>>> 99a046c8c058ff05d0fb9e7ff0b8063e09b4b97e

@@ -1,21 +1,9 @@
-//========================================================================
-//
-// Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, version 3..
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>
-//
-//========================================================================
+/*
+ * Copyright (c) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
+ * Copyright (c) 2025 disinclination
+ * Licensed under the GNU General Public License v3.0
+ */
+
 
 #include "NgPost.h"
 #include "PostingJob.h"
@@ -46,21 +34,19 @@
 #include <QRegularExpression>
 #include <QDir>
 #include <QNetworkProxy>
+
+#include "nntp/NntpFile.h"
 #ifdef __USE_TMP_RAM__
   #include <QStorageInfo>
 #endif
 
 const char *NgPost::sAppName          = "ngPost";
-const QString NgPost::sVersion        = QString::number(APP_VERSION);
-const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/mbruel/ngPost/master/src/ngPost.pri";
-const QString NgPost::sDonationURL    = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W2C236U6JNTUA&item_name=ngPost&currency_code=EUR";
-const QString NgPost::sDonationBtcURL = "https://github.com/mbruel/ngPost#donations";
+const QString NgPost::sVersion        = "5.0";
+const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/disinclination/ngPost/master/src/ngPost.pri";
 
 const QString NgPost::sMainThreadName     = "MainThread";
 const char *NgPost::sFolderMonitoringName = QT_TRANSLATE_NOOP("NgPost", "Auto Posting");
 const char *NgPost::sQuickJobName         = QT_TRANSLATE_NOOP("NgPost", "Quick Post");
-const char *NgPost::sDonationTooltip      = QT_TRANSLATE_NOOP("NgPost", "Donations are welcome, I spent quite some time to develop this app and make a sexy GUI although I'm not using it ;)");
-const char *NgPost::sDonationBtcTooltip   = QT_TRANSLATE_NOOP("NgPost", "Feel free to donate in BTC, click here to see my address on the GitHub section");
 
 std::string NgPost::sArticleIdSignature   = sDefaultMsgIdSignature;
 const std::string NgPost::sRandomAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -224,6 +210,7 @@ const QList<QCommandLineOption> NgPost::sCmdOptions = {
 };
 
 const QMap<NgPost::PostCmdPlaceHolders, QString> NgPost::sPostCmdPlaceHolders = {
+	{PostCmdPlaceHolders::originalPath,     "__originalPath__"},
     {PostCmdPlaceHolders::nzbPath,          "__nzbPath__"},
     {PostCmdPlaceHolders::nzbName,          "__nzbName__"},
     {PostCmdPlaceHolders::rarName,          "__rarName__"},
@@ -672,6 +659,15 @@ void NgPost::doNzbPostCMD(PostingJob *job)
         {
             QString fullCmd(nzbPostCmd);
             fullCmd.replace("%1",                   job->nzbFilePath()); // for backwards compatibility
+
+            fullCmd.replace(sPostCmdPlaceHolders[PostCmdPlaceHolders::originalPath],
+#if defined( Q_OS_WIN )
+                QString(job->originalDirectory()).replace("/", "\\")
+#else
+                job->originalDirectory()
+#endif
+            );
+
             fullCmd.replace(sPostCmdPlaceHolders[PostCmdPlaceHolders::nzbPath],
         #if defined( Q_OS_WIN )
                     QString(job->nzbFilePath()).replace("/", "\\")
@@ -694,9 +690,18 @@ void NgPost::doNzbPostCMD(PostingJob *job)
 #endif
             QString     cmd  = args.takeFirst();
             qDebug() << "cmd: " << cmd << ", args: " << args;
-            int res = QProcess::execute(cmd, args);
+
+            QProcess* process = new QProcess(this);
+
+            connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
+                qDebug() << "Process finished with code:" << exitCode << "and status:" << exitStatus;
+                process->deleteLater();
+            });
+
+            process->start(cmd, args);
+
             if (debugMode())
-                _log(tr("NZB Post cmd: %1 exitcode: %2").arg(fullCmd).arg(res));
+                _log(tr("NZB Post cmd: %1").arg(fullCmd));
             else
                 _log(fullCmd);
         }
@@ -828,15 +833,15 @@ void NgPost::onCheckForNewVersion()
                 {
                     QString msg = tr("<center><h3>New version available on GitHUB</h3></center>");
                     msg += tr("<br/>The last release is now <b>v%1</b>").arg(lastRealease);
-                    msg += tr("<br/><br/>You can download it from the <a href='https://github.com/mbruel/ngPost/releases/tag/v%1'>release directory</a>").arg(lastRealease);
-                    msg += tr("<br/><br/>Here are the full <a href='https://github.com/mbruel/ngPost/blob/master/release_notes.txt'>release_notes</a>");
+                    msg += tr("<br/><br/>You can download it from the <a href='https://github.com/disinclination/ngPost/releases/tag/v%1'>release directory</a>").arg(lastRealease);
+                    msg += tr("<br/><br/>Here are the full <a href='https://github.com/disinclination/ngPost/blob/master/release_notes.txt'>release_notes</a>");
 
                     QMessageBox::information(_hmi, tr("New version available"), msg);
                 }
                 else
 #endif
                     qCritical() << "There is a new version available on GitHUB: v" << lastRealease
-                                << " (visit https://github.com/mbruel/ngPost/ to get it)";
+                                << " (visit https://github.com/disinclination/ngPost/ to get it)";
             }
 
             break; // no need to continue to parse the page
@@ -844,25 +849,6 @@ void NgPost::onCheckForNewVersion()
     }
     reply->deleteLater();
 }
-
-#ifdef __USE_HMI__
-#include <QDesktopServices>
-void NgPost::onDonation()
-{
-    QDesktopServices::openUrl(sDonationURL);
-}
-void NgPost::onDonationBTC()
-{
-    QDesktopServices::openUrl(sDonationBtcURL);
-}
-
-#include "hmi/AboutNgPost.h"
-void NgPost::onAboutClicked()
-{
-    AboutNgPost about(this);
-    about.exec();
-}
-#endif
 
 void NgPost::onPostingJobStarted()
 {
@@ -2224,7 +2210,7 @@ QString NgPost::_parseConfig(const QString &configPath)
                             _log(tr("obsolete keyword AUTO_COMPRESS, you should use PACK instead, please click SAVE to update your conf and then go check it."));
                         else
                             _log(tr("obsolete keyword AUTO_COMPRESS, you should use PACK instead, please refer to the conf example: %1").arg(
-                                     "https://github.com/mbruel/ngPost/blob/master/ngPost.conf#L140"));
+                                     "https://github.com/disinclination/ngPost/blob/master/ngPost.conf#L140"));
                     }
                     else if (opt == sOptionNames[Opt::PACK])
                     {
@@ -2557,7 +2543,8 @@ void NgPost::saveConfig()
                << "\n"
                << tr("## execute a command or script at the end of each post (see examples)") << "\n"
                << tr("## you can use several post commands by defining several NZB_POST_CMD") << "\n"
-               << tr("## here is the list of the available placehoders") << "\n"
+               << tr("## here is the list of the available placeholders") << "\n"
+    		   << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::originalPath] << "    : " << tr("full path of the source file") << "\n"
                << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::nzbPath] <<"          : " << tr("full path of the written nzb file") << "\n"
                << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::nzbName] <<"          : " << tr("name of the nzb without the extension (original source name)") << "\n"
                << "##   "<< sPostCmdPlaceHolders[PostCmdPlaceHolders::rarName] <<"          : " << tr("name of the archive files (in case of obfuscation)") << "\n"

@@ -1,7 +1,7 @@
 //========================================================================
 //
 // Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
+// This file is a part of ngPost : https://github.com/disinclination/ngPost
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,18 +18,21 @@
 //========================================================================
 
 #include "FileUploader.h"
+#include <QHttpMultiPart>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QHttpMultiPart>
-FileUploader::FileUploader(QNetworkAccessManager &netMgr, const QString &nzbFilePath):
-    QObject(), _netMgr(netMgr), _reply(nullptr),
-    _nzbFilePath(nzbFilePath), _nzbFile(nzbFilePath), _nzbUrl()
+FileUploader::FileUploader(QNetworkAccessManager &netMgr, const QString &nzbFilePath)
+    : QObject()
+    , _netMgr(netMgr)
+    , _reply(nullptr)
+    , _nzbFilePath(nzbFilePath)
+    , _nzbFile(nzbFilePath)
+    , _nzbUrl()
 {}
 
 FileUploader::~FileUploader()
 {
-    if (_nzbFile.isOpen())
-    {
+    if (_nzbFile.isOpen()) {
 #ifdef __DEBUG__
         qDebug() << "Deleting FileUploader for " << _nzbFile.fileName();
 #endif
@@ -42,52 +45,48 @@ FileUploader::~FileUploader()
 
 void FileUploader::startUpload(const QUrl &serverUrl)
 {
-    if (_nzbFile.open(QIODevice::ReadOnly))
-    {
+    if (_nzbFile.open(QIODevice::ReadOnly)) {
         QString protocol = serverUrl.scheme(); // always lowercase
-        if (protocol == "ftp")
-        {
+        if (protocol == "ftp") {
             _nzbUrl = QUrl(QString("%1/%2").arg(serverUrl.url()).arg(_nzbFilePath.fileName()));
 #ifdef __DEBUG__
             qDebug() << "FileUploader FTP url: " << _nzbUrl.url();
 #endif
 
             _reply = _netMgr.put(QNetworkRequest(_nzbUrl), &_nzbFile);
-        }
-        else if (protocol.startsWith("http"))
-        {
+        } else if (protocol.startsWith("http")) {
             _nzbUrl = serverUrl;
 
 #ifdef __DEBUG__
             qDebug() << "FileUploader POST on url: " << _nzbUrl.url();
-#endif                        
+#endif
             QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
             QString fileKey("file"), fileName = QFileInfo(_nzbFilePath).fileName();
             fileName.replace('"', '\'');
             QHttpPart filePart;
             filePart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                               QString("form-data; name=\"%1\"; filename=\"%2\"").arg(fileKey).arg(fileName));
+                               QString("form-data; name=\"%1\"; filename=\"%2\"")
+                                   .arg(fileKey)
+                                   .arg(fileName));
             filePart.setBodyDevice(&_nzbFile);
             multiPart->append(filePart);
 
-
             QNetworkRequest req(_nzbUrl);
-            req.setRawHeader( "User-Agent" , "ngPost C++ app" );
+            req.setRawHeader("User-Agent", "ngPost C++ app");
 
             _reply = _netMgr.post(req, multiPart);
 
             multiPart->setParent(_reply); // multiPart deleted on the destruction of reply
-        }
-        else
-        {
+        } else {
             emit error(tr("Error uploading nzb to %1: Protocol not supported").arg(url()));
             emit readyToDie();
         }
         if (_reply)
-            QObject::connect(_reply, &QNetworkReply::finished, this, &FileUploader::onUploadFinished);
-    }
-    else
-    {
+            QObject::connect(_reply,
+                             &QNetworkReply::finished,
+                             this,
+                             &FileUploader::onUploadFinished);
+    } else {
         emit error(tr("Error uploading file: can't open file ").arg(_nzbFile.fileName()));
         emit readyToDie();
     }
@@ -103,4 +102,3 @@ void FileUploader::onUploadFinished()
 
     emit readyToDie();
 }
-

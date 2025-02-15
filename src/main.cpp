@@ -1,7 +1,7 @@
 //========================================================================
 //
 // Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
+// This file is a part of ngPost : https://github.com/disinclination/ngPost
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
 //
 //========================================================================
 
+#include <QCoreApplication>
+#include <QLoggingCategory>
 #include "NgPost.h"
 #include <csignal>
 #include <iostream>
-#include <QCoreApplication>
-#include <QLoggingCategory>
 
-#if defined(__USE_HMI__) && defined( Q_OS_WIN )
+#if defined(__USE_HMI__) && defined(Q_OS_WIN)
 #include <windows.h>
 #endif
 
@@ -34,24 +34,22 @@ void handleShutdown(int signal);
 
 static NgPost *app = nullptr;
 
-
 #if defined(__USE_TMP_RAM__) && defined(__DEBUG__)
 #include "PostingJob.h"
 void dispFolderSize(const QFileInfo &folderPath)
 {
     qint64 size = NgPost::recursiveSize(folderPath);
-    qDebug() << "size " << folderPath.absoluteFilePath()
-             << " : " << PostingJob::humanSize(static_cast<double>(size))
-             << " (" << size << ")";
+    qDebug() << "size " << folderPath.absoluteFilePath() << " : "
+             << PostingJob::humanSize(static_cast<double>(size)) << " (" << size << ")";
 }
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     // disable SSL warnings
     QLoggingCategory::setFilterRules("qt.network.ssl.warning=false");
 
-    signal(SIGINT,  &handleShutdown);// shut down on ctrl-c
+    signal(SIGINT, &handleShutdown);// shut down on ctrl-c
     signal(SIGTERM, &handleShutdown);// shut down on killall
 #ifdef __linux__
     signal(SIGUSR1, &handleSigUsr); // kill -s SIGUSR1 $(pidof ngPost) to hide/show the GUI
@@ -66,11 +64,11 @@ int main(int argc, char *argv[])
     if (app->useHMI())
     {
 #if defined( Q_OS_WIN )
-        ::ShowWindow( ::GetConsoleWindow(), SW_HIDE ); //hide console window
+        ::ShowWindow(::GetConsoleWindow(), SW_HIDE); //hide console window
 #endif
         app->checkSupportSSL();
         exitCode = app->startHMI();
-    }
+}
     else if (app->parseCommandLine(argc, argv))
 #else
     if (app->parseCommandLine(argc, argv))
@@ -101,7 +99,7 @@ int main(int argc, char *argv[])
 
     delete app;
     return exitCode;
-}
+        }
 
 void handleShutdown(int signal)
 {

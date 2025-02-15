@@ -1,21 +1,8 @@
-//========================================================================
-//
-// Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, version 3..
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>
-//
-//========================================================================
+/*
+ * Copyright (c) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
+ * Copyright (c) 2025 disinclination
+ * Licensed under the GNU General Public License v3.0
+ */
 
 #ifndef NntpArticle_H
 #define NntpArticle_H
@@ -58,6 +45,8 @@ private:
 
     mutable QString _msgId; //!< using the UUID but the server could rewrite it...
 
+    const bool _obfuscateArticles;
+
 signals:
     void posted(quint64 size); //!< to warn the main thread (async upload)
     void failed(quint64 size); //!< to warn the main thread (async upload)
@@ -67,9 +56,6 @@ public:
                 const std::string *from, bool obfuscation);
 
     void yEncBody(const char data[]);
-
-//    NntpArticle(const std::string &from, const std::string &groups, const std::string &subject,
-//                const std::string &body);
 
     ~NntpArticle();
 

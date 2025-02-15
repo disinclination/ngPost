@@ -1,7 +1,7 @@
 //========================================================================
 //
 // Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
+// This file is a part of ngPost : https://github.com/disinclination/ngPost
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ public:
 
     inline QString stats() const;
     inline QString path() const;
+    inline QString directoryPath() const;
     inline QString name() const;
     inline QString nameWithQuotes() const;
     inline std::string fileName() const;
@@ -91,7 +92,16 @@ QString NntpFile::stats() const
 {
     return QString("[%1 ok / %2] %3").arg(_posted.size()).arg(_nbAticles).arg(_file.absoluteFilePath());
 }
-QString NntpFile::path() const { return _file.absoluteFilePath(); }
+QString NntpFile::path() const
+{
+	return _file.absoluteFilePath();
+}
+
+QString NntpFile::directoryPath() const
+{
+    return _file.absolutePath();
+}
+
 QString NntpFile::name() const {
     return QString("[%1/%2] %3").arg(_num, _padding, 10,  QChar('0')).arg(
                 _nbFiles).arg(_file.fileName());

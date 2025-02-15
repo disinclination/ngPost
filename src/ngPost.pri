@@ -1,11 +1,11 @@
 QT += core network
 
-DEFINES += "APP_VERSION=\"4.16\""
+DEFINES += "APP_VERSION=\"5.0\""
 
 INCLUDEPATH += $$PWD
 TARGET = ngPost
 TEMPLATE = app
-CONFIG += c++14
+CONFIG += c++17
 CONFIG -= app_bundle
 
 DEFINES += __USE_CONNECTION_TIMEOUT__
@@ -24,19 +24,23 @@ TRANSLATIONS = lang/ngPost_en.ts lang/ngPost_fr.ts lang/ngPost_es.ts lang/ngPost
                lang/ngPost_nl.ts lang/ngPost_pt.ts lang/ngPost_zh.ts
 
 win32: {
-    RC_ICONS += ngPost.ico
-
-# we need the console to be able to print stuff in command line mode...
-# we hide the console if we start in GUI mode
+    LIBS += -luser32 -ladvapi32
+    RC_ICONS = ngPost.ico
+    RC_FILE = resources/version.rc
+    # Include console only if not using HMI (GUI)
     CONFIG += console
 }
 
 macx: {
     ICON = ngPost.icns
     CONFIG += app_bundle
-    ExtraFiles.files = $$PWD/par2 $$PWD/parpar $$PWD/LICENSE
-    ExtraFiles.path = Contents/MacOS
-    QMAKE_BUNDLE_DATA += ExtraFiles
+
+    # Ensure par2 and parpar exist externally before adding them
+    system(test -f /usr/local/bin/par2) {
+        ExtraFiles.files = /usr/local/bin/par2 /usr/local/bin/parpar $$PWD/LICENSE
+        ExtraFiles.path = Contents/MacOS
+        QMAKE_BUNDLE_DATA += ExtraFiles
+    }
 }
 
 CONFIG(debug, debug|release) :{
@@ -113,5 +117,6 @@ HEADERS += \
 
 
 RESOURCES += \
-    resources/resources.qrc
+    resources/resources.qrc \
+    resources/version.rc
 

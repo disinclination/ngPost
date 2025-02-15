@@ -1,7 +1,7 @@
 //========================================================================
 //
 // Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
+// This file is a part of ngPost : https://github.com/disinclination/ngPost
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #include "PostingWidget.h"
 #include "ui_PostingWidget.h"
 #include "MainWindow.h"
-#include "AboutNgPost.h"
 #include "NgPost.h"
 #include "PostingJob.h"
 #include "nntp/NntpFile.h"
@@ -447,10 +446,6 @@ void PostingWidget::init()
 
     connect(_ui->nzbFileButton,     &QAbstractButton::clicked, this, &PostingWidget::onNzbFileClicked);
 
-    connect(_ui->aboutButton,       &QAbstractButton::clicked, _ngPost, &NgPost::onAboutClicked);
-    connect(_ui->donateButton,      &QAbstractButton::clicked, _ngPost, &NgPost::onDonation);
-    connect(_ui->btcDonate,    &QAbstractButton::clicked, _ngPost, &NgPost::onDonationBTC);
-
 
     onCompressCB(_ngPost->_doCompress);
     if (_ngPost->_doCompress)
@@ -537,8 +532,6 @@ void PostingWidget::retranslate()
     _ui->retranslateUi(this);
     _ui->rarMaxCB->setToolTip(tr("limit the number of archive volume to %1 (cf config RAR_MAX)").arg(_ngPost->_rarMax));
     _ui->redundancySB->setToolTip(tr("Using PAR2_ARGS from config file: %1").arg(_ngPost->_par2Args));
-    _ui->donateButton->setToolTip(_ngPost->donationTooltip());
-    _ui->btcDonate->setToolTip(_ngPost->donationBtcTooltip());
     _ui->filesList->setToolTip(QString("%1<ul><li>%2</li><li>%3</li><li>%4</li></ul>%5").arg(
                                    tr("You can add files or folder by:")).arg(
                                    tr("Drag & Drop files/folders")).arg(

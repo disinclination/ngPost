@@ -1,7 +1,7 @@
 //========================================================================
 //
 // Copyright (C) 2020 Matthieu Bruel <Matthieu.Bruel@gmail.com>
-// This file is a part of ngPost : https://github.com/mbruel/ngPost
+// This file is a part of ngPost : https://github.com/disinclination/ngPost
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@ class FileUploader : public QObject
 
 private:
     QNetworkAccessManager &_netMgr;
-    QNetworkReply         *_reply;
-    QFileInfo              _nzbFilePath;
-    QFile                  _nzbFile;
-    QUrl                   _nzbUrl;
+    QNetworkReply *_reply;
+    QFileInfo _nzbFilePath;
+    QFile _nzbFile;
+    QUrl _nzbUrl;
 
 public:
     FileUploader(QNetworkAccessManager &netMgr, const QString &nzbFilePath);
@@ -52,7 +52,6 @@ private slots:
 
 private:
     inline QString url() const;
-
 };
 
 QString FileUploader::url() const
@@ -60,7 +59,7 @@ QString FileUploader::url() const
     if (_nzbUrl.isEmpty())
         return QString();
     else
-        return _nzbUrl.toString(QUrl::RemovePassword|QUrl::RemovePath);
+        return _nzbUrl.toString(QUrl::RemovePassword | QUrl::RemovePath);
 }
 
 #endif // FILEUPLOADER_H
