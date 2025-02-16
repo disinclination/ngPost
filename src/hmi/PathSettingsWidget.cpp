@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QFileDialog>
 
 PathSettingsWidget::PathSettingsWidget(QWidget *parent)
     : QDialog(parent)
@@ -20,8 +21,21 @@ PathSettingsWidget::PathSettingsWidget(QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
 
+    // Disable save button
+    ui->saveButton->setEnabled(false);
+
+    // Catch changes on the UI
+    connect(ui->tempPathTextField, &QLineEdit::textChanged, this, &PathSettingsWidget::OnValueChanged);
+
     // Button related
     connect(ui->cancelButton, &QPushButton::clicked, this, &PathSettingsWidget::HandleCancel);
+    connect(ui->tempPathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnTempPathButtonClicked);
+    connect(ui->nzbPathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnNzbPathButtonClicked);
+    connect(ui->rarPathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnRarPathButtonClicked);
+    connect(ui->par2PathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnPar2PathButtonClicked);
+    connect(ui->postHistoryPathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnPostHistoryPathButtonClicked);
+    connect(ui->logPathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnLogPathButtonClicked);
+
 }
 
 PathSettingsWidget::~PathSettingsWidget()
@@ -55,4 +69,57 @@ void PathSettingsWidget::closeEvent(QCloseEvent *event)
     } else {
         event->accept();  // Allow the dialog to close immediately
     }
+}
+
+bool PathSettingsWidget::hasChanges() const
+{
+    return _valueHasChanged;
+}
+
+void PathSettingsWidget::OnValueChanged()
+{
+    _valueHasChanged = true;
+
+    ui->saveButton->setEnabled(true);
+}
+
+void PathSettingsWidget::selectDirectory(QLineEdit *lineEdit)
+{
+    // Open the folder selection dialog
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Folder"), QString(),
+                                                    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    // Check if the user has selected a directory
+    if (!dir.isEmpty()) {
+        lineEdit->setText(dir);  // Set the selected directory path to the provided QLineEdit
+    }
+}
+
+void PathSettingsWidget::OnTempPathButtonClicked()
+{
+    selectDirectory(ui->tempPathTextField);
+}
+
+void PathSettingsWidget::OnNzbPathButtonClicked()
+{
+    selectDirectory(ui->nzbPathTextField);
+}
+
+void PathSettingsWidget::OnRarPathButtonClicked()
+{
+    selectDirectory(ui->rarPathTextField);
+}
+
+void PathSettingsWidget::OnPar2PathButtonClicked()
+{
+    selectDirectory(ui->par2PathTextField);
+}
+
+void PathSettingsWidget::OnPostHistoryPathButtonClicked()
+{
+    selectDirectory(ui->postHistoryPathTextField);
+}
+
+void PathSettingsWidget::OnLogPathButtonClicked()
+{
+    selectDirectory(ui->logPathTextField);
 }

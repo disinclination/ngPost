@@ -40,7 +40,6 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsWidget::HandleCancel);
     connect(ui->pathSettingsButton, &QPushButton::clicked, this, &SettingsWidget::OnPathSettingsClicked);
 
-
     // Make the dialog modal
     setModal(true);
 }

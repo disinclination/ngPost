@@ -2,6 +2,7 @@
 #define PATHSETTINGSWIDGET_H
 
 #include <QDialog>
+#include <QLineEdit>
 
 namespace Ui {
 class PathSettingsWidget;
@@ -17,9 +18,18 @@ public:
 
 private slots:
     void HandleCancel();
+    void OnTempPathButtonClicked();
+    void OnNzbPathButtonClicked();
+    void OnRarPathButtonClicked();
+    void OnPar2PathButtonClicked();
+    void OnPostHistoryPathButtonClicked();
+    void OnLogPathButtonClicked();
+    void OnValueChanged();
 
 private:
     Ui::PathSettingsWidget *ui;
+    void selectDirectory(QLineEdit *lineEdit);
+    bool hasChanges() const;
 
 protected:
     void closeEvent(QCloseEvent *event) override;

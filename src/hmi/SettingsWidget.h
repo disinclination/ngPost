@@ -15,17 +15,15 @@ public:
     explicit SettingsWidget(QWidget *parent = nullptr);
     ~SettingsWidget();
 
-    bool hasChanges() const;
-
 private slots:
     void OnAnonymousProxyToggled();
     void OnValueChanged();
     void HandleCancel();
     void OnPathSettingsClicked();
 
-
 private:
     Ui::SettingsWidget *ui;
+    bool hasChanges() const;
 
 protected:
     void closeEvent(QCloseEvent *event) override;
