@@ -15,11 +15,20 @@ public:
     explicit SettingsWidget(QWidget *parent = nullptr);
     ~SettingsWidget();
 
+    bool hasChanges() const;
+
 private slots:
     void OnAnonymousProxyToggled();
+    void onValueChanged();
+    void handleCancel();
 
 private:
     Ui::SettingsWidget *ui;
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
+    bool _valueHasChanged;
 };
 
 #endif // SETTINGSWIDGET_H
