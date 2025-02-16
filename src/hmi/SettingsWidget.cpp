@@ -1,5 +1,6 @@
 #include "SettingsWidget.h"
 #include "ui_SettingsWidget.h"
+#include "PathSettingsWidget.h"
 
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -14,7 +15,7 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     // Setup the dialog
     setWindowTitle("ngPost - Settings");
     setWindowIcon(QIcon(":/icons/ngPost.png"));
-    setFixedSize(500, 500);
+    setFixedSize(500, 255);
 
     // Disable the maximize button and resizing
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
@@ -26,17 +27,18 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 
     // Catch any changes on the UI
     // Proxy related
-    connect(ui->anonymousProxyCheckBox, &QCheckBox::toggled, this, &SettingsWidget::onValueChanged);
-    connect(ui->proxyUsernameTextField, &QLineEdit::textChanged, this, &SettingsWidget::onValueChanged);
-    connect(ui->proxyPasswordTextField,&QLineEdit::textChanged, this, &SettingsWidget::onValueChanged);
-    connect(ui->proxyHostnameTextField, &QLineEdit::textChanged, this, &SettingsWidget::onValueChanged);
-    connect(ui->proxyHttpRadioButton, &QRadioButton::toggled, this, &SettingsWidget::onValueChanged);
-    connect(ui->proxyHttpsRadioButton, &QRadioButton::toggled, this, &SettingsWidget::onValueChanged);
-    connect(ui->proxySocks4RadioButton, &QRadioButton::toggled, this, &SettingsWidget::onValueChanged);
-    connect(ui->proxySocks5RadioButton, &QRadioButton::toggled, this, &SettingsWidget::onValueChanged);
+    connect(ui->anonymousProxyCheckBox, &QCheckBox::toggled, this, &SettingsWidget::OnValueChanged);
+    connect(ui->proxyUsernameTextField, &QLineEdit::textChanged, this, &SettingsWidget::OnValueChanged);
+    connect(ui->proxyPasswordTextField,&QLineEdit::textChanged, this, &SettingsWidget::OnValueChanged);
+    connect(ui->proxyHostnameTextField, &QLineEdit::textChanged, this, &SettingsWidget::OnValueChanged);
+    connect(ui->proxyHttpRadioButton, &QRadioButton::toggled, this, &SettingsWidget::OnValueChanged);
+    connect(ui->proxyHttpsRadioButton, &QRadioButton::toggled, this, &SettingsWidget::OnValueChanged);
+    connect(ui->proxySocks4RadioButton, &QRadioButton::toggled, this, &SettingsWidget::OnValueChanged);
+    connect(ui->proxySocks5RadioButton, &QRadioButton::toggled, this, &SettingsWidget::OnValueChanged);
 
     // Button related
-    connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsWidget::handleCancel);
+    connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsWidget::HandleCancel);
+    connect(ui->pathSettingsButton, &QPushButton::clicked, this, &SettingsWidget::OnPathSettingsClicked);
 
 
     // Make the dialog modal
@@ -53,14 +55,14 @@ bool SettingsWidget::hasChanges() const
     return _valueHasChanged;
 }
 
-void SettingsWidget::onValueChanged()
+void SettingsWidget::OnValueChanged()
 {
     _valueHasChanged = true;
 
     ui->saveButton->setEnabled(true);
 }
 
-void SettingsWidget::handleCancel()
+void SettingsWidget::HandleCancel()
 {
     if (_valueHasChanged) {
         // Create a warning message box
@@ -78,8 +80,8 @@ void SettingsWidget::handleCancel()
 
 void SettingsWidget::closeEvent(QCloseEvent *event)
 {
-    // Handle the cancellation logic inside handleCancel
-    handleCancel();
+    // Handle the cancellation logic inside HandleCancel
+    HandleCancel();
 
     if (_valueHasChanged) {
         event->ignore();  // Prevent the close event if there are unsaved changes
@@ -88,7 +90,14 @@ void SettingsWidget::closeEvent(QCloseEvent *event)
     }
 }
 
-void SettingsWidget::OnAnonymousProxyToggled(){
+void SettingsWidget::OnPathSettingsClicked()
+{
+  PathSettingsWidget pathSettingsWidget;
+  pathSettingsWidget.exec();
+}
+
+void SettingsWidget::OnAnonymousProxyToggled()
+{
     qDebug() << "Anonymous proxy toggled";
     ui->proxyUsernameTextField->setDisabled(ui->anonymousProxyCheckBox->isChecked());
     ui->proxyPasswordTextField->setDisabled(ui->anonymousProxyCheckBox->isChecked());

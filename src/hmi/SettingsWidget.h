@@ -19,8 +19,10 @@ public:
 
 private slots:
     void OnAnonymousProxyToggled();
-    void onValueChanged();
-    void handleCancel();
+    void OnValueChanged();
+    void HandleCancel();
+    void OnPathSettingsClicked();
+
 
 private:
     Ui::SettingsWidget *ui;

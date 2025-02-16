@@ -35,10 +35,13 @@ FORMS += \
 }
 
 FORMS += \
+    hmi/PathSettingsWidget.ui \
     hmi/SettingsWidget.ui
 
 HEADERS += \
+    hmi/PathSettingsWidget.h \
     hmi/SettingsWidget.h
 
 SOURCES += \
+    hmi/PathSettingsWidget.cpp \
     hmi/SettingsWidget.cpp
