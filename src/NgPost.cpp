@@ -2571,10 +2571,10 @@ void NgPost::saveConfig()
                << "\n"
                << tr("## Use a single proxy (supports SOCKS5, SOCKS4, HTTP, and HTTPS types)") << "\n"
                << (_proxyUrl.isEmpty() ?
-                   "#PROXY = username:password@proxy.example.com:8080\n"
-                   "#PROXY = username:password@proxy.example.com:8443\n"
-                   "#PROXY = username:password@proxy.example.com:1080\n"
-                   "#PROXY = username:password@proxy.example.com:1080" :
+                   "#PROXY = http://username:password@proxy.example.com:8080\n"
+                   "#PROXY = https://username:password@proxy.example.com:8443\n"
+                   "#PROXY = SOCKS4://username:password@proxy.example.com:1080\n"
+                   "#PROXY = SOCKS5://username:password@proxy.example.com:1080" :
                    _proxyUrl) << "\n"
                << "\n"
                << tr("## destination folder for all your nzb") << "\n"
