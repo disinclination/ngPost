@@ -5,7 +5,6 @@
         <file>icons/genKey.png</file>
         <file>icons/save.png</file>
         <file>icons/plus.png</file>
-        <file>icons/donate.png</file>
         <file>icons/about.png</file>
         <file>icons/folder.png</file>
         <file>icons/file.png</file>
@@ -37,6 +36,5 @@
         <file>lang/ngPost_nl.qm</file>
         <file>icons/left.png</file>
         <file>icons/right.png</file>
-        <file>icons/btc-logo.png</file>
     </qresource>
 </RCC>
