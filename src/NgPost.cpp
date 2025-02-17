@@ -2148,9 +2148,11 @@ QString NgPost::_parseConfig(const QString &configPath)
                                 {"socks4", [&]() { handleSocks4Proxy(proxyInfo.username, proxyInfo.password, proxyInfo.host, proxyInfo.port); }},
                                 {"socks5", [&]() { handleSocks5Proxy(proxyInfo.username, proxyInfo.password, proxyInfo.host, proxyInfo.port); }},
                             };
+
+                            auto lowerProxyType = proxyInfo.type.toLower();
                         
-                            if (proxyHandlers.find(proxyInfo.type) != proxyHandlers.end()) {
-                                proxyHandlers[proxyInfo.type]();
+                            if (proxyHandlers.find(lowerProxyType) != proxyHandlers.end()) {
+                                proxyHandlers[lowerProxyType]();
                             } else {
                                 handleUnknownProxy();
                             }
