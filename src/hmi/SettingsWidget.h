@@ -20,10 +20,12 @@ private slots:
     void OnValueChanged();
     void HandleCancel();
     void OnPathSettingsClicked();
+    void OnPasswordGenerateClicked();
 
 private:
     Ui::SettingsWidget *ui;
     bool hasChanges() const;
+    std::string generateRandomString(int length);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

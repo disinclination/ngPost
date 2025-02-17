@@ -29,6 +29,7 @@ private slots:
 private:
     Ui::PathSettingsWidget *ui;
     void selectDirectory(QLineEdit *lineEdit);
+    void selectFile(QLineEdit *lineEdit);
     bool hasChanges() const;
 
 protected:

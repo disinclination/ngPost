@@ -4,6 +4,7 @@
 
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <random>
 
 SettingsWidget::SettingsWidget(QWidget *parent)
     : QDialog(parent)
@@ -15,7 +16,7 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     // Setup the dialog
     setWindowTitle("ngPost - Settings");
     setWindowIcon(QIcon(":/icons/ngPost.png"));
-    setFixedSize(500, 255);
+    setFixedSize(325, 275);
 
     // Disable the maximize button and resizing
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
@@ -39,6 +40,12 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     // Button related
     connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsWidget::HandleCancel);
     connect(ui->pathSettingsButton, &QPushButton::clicked, this, &SettingsWidget::OnPathSettingsClicked);
+    connect(ui->generateRandomArchivePasswordButton, &QPushButton::clicked, this, &SettingsWidget::OnPasswordGenerateClicked);
+
+    // Archive related
+    connect(ui->archivePasswordTextField, &QLineEdit::textChanged, this, &SettingsWidget::OnValueChanged);
+
+    ui->generateRandomArchivePasswordButton->setIcon(QIcon(":/icons/reset-password.png"));
 
     // Make the dialog modal
     setModal(true);
@@ -64,28 +71,26 @@ void SettingsWidget::OnValueChanged()
 void SettingsWidget::HandleCancel()
 {
     if (_valueHasChanged) {
-        // Create a warning message box
         QMessageBox::StandardButton reply;
         reply = QMessageBox::warning(this, "Unsaved Changes",
                                       "There are changes that have not been saved. Are you sure you want to close?",
                                       QMessageBox::Yes | QMessageBox::No);
         if (reply == QMessageBox::Yes) {
-            reject();  // Close the dialog
+            reject();
         }
     } else {
-        reject();  // Accept the close event if no changes
+        reject();
     }
 }
 
 void SettingsWidget::closeEvent(QCloseEvent *event)
 {
-    // Handle the cancellation logic inside HandleCancel
     HandleCancel();
 
     if (_valueHasChanged) {
-        event->ignore();  // Prevent the close event if there are unsaved changes
+        event->ignore();
     } else {
-        event->accept();  // Allow the dialog to close immediately
+        event->accept();
     }
 }
 
@@ -104,3 +109,31 @@ void SettingsWidget::OnAnonymousProxyToggled()
     _valueHasChanged = true;
 }
 
+void SettingsWidget::OnPasswordGenerateClicked()
+{
+    qDebug() << "Password generation initiated";
+
+    auto passwordLength = ui->passwordLengthSpinBox->value();
+    auto randomPassword = generateRandomString(passwordLength);
+
+    ui->archivePasswordTextField->setText(QString::fromStdString(randomPassword));
+}
+
+std::string SettingsWidget::generateRandomString(int length) {
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    std::uniform_int_distribution<> dist(0, sizeof(alphanum) - 2);
+
+    std::string randomString;
+    randomString.reserve(length);
+    for (int i = 0; i < length; ++i) {
+        randomString += alphanum[dist(engine)];
+    }
+
+    return randomString;
+}

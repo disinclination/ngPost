@@ -85,12 +85,28 @@ void PathSettingsWidget::OnValueChanged()
 
 void PathSettingsWidget::selectDirectory(QLineEdit *lineEdit)
 {
-    // Open the folder selection dialog
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Folder"), QString(),
-                                                    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    // Check if the user has selected a directory
+    QString dir = QFileDialog::getExistingDirectory(
+        this, 
+        "Select Folder", 
+        QString(),
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
+    );
+
     if (!dir.isEmpty()) {
-        lineEdit->setText(dir);  // Set the selected directory path to the provided QLineEdit
+        lineEdit->setText(dir); 
+    }
+}
+
+void PathSettingsWidget::selectFile(QLineEdit *lineEdit) {
+    QString fileName = QFileDialog::getOpenFileName(
+        this,
+        "Select an executable file",
+        QDir::homePath(),
+        "Executable Files (*.exe)"
+    );
+
+    if (!fileName.isEmpty()) {
+        lineEdit->setText(fileName);
     }
 }
 
@@ -106,12 +122,12 @@ void PathSettingsWidget::OnNzbPathButtonClicked()
 
 void PathSettingsWidget::OnRarPathButtonClicked()
 {
-    selectDirectory(ui->rarPathTextField);
+    selectFile(ui->rarPathTextField);
 }
 
 void PathSettingsWidget::OnPar2PathButtonClicked()
 {
-    selectDirectory(ui->par2PathTextField);
+    selectFile(ui->par2PathTextField);
 }
 
 void PathSettingsWidget::OnPostHistoryPathButtonClicked()
