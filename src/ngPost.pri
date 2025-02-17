@@ -28,7 +28,9 @@ win32: {
     RC_ICONS = ngPost.ico
     RC_FILE = resources/version.rc
     # Include console only if not using HMI (GUI)
-    CONFIG += console
+    !use_hmi {
+        CONFIG += console
+    }
 }
 
 macx: {
@@ -119,6 +121,4 @@ HEADERS += \
 RESOURCES += \
     resources/resources.qrc \
     resources/version.rc
-
-FORMS +=
 

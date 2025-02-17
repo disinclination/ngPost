@@ -74,7 +74,7 @@ public:
         SHUTDOWN_CMD,
         CHECK,
         QUIET,
-        PROXY_SOCKS5,
+        PROXY,
         DISP_PROGRESS,
         DEBUG,
         DEBUG_FULL,
@@ -373,6 +373,14 @@ private:
     static std::string
         sArticleIdSignature; //!< signature for Article message id (must be as a email address)
     static const std::string sRandomAlphabet;
+
+    struct ProxyInfo {
+        QString type;
+        QString username;
+        QString password;
+        QString host;
+        int port;
+    };
 
 #ifdef __COMPUTE_IMMEDIATE_SPEED__
     static const int sImmediateSpeedDurationMs = 3000;

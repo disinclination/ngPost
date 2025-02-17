@@ -58,7 +58,7 @@ const QString NgPost::sSpace       = sDefaultSpace;
 
 const QMap<NgPost::Opt, QString> NgPost::sOptionNames =
 {
-    {Opt::PROXY_SOCKS5,   "proxy_socks5"},
+    {Opt::PROXY,   "proxy"},
     {Opt::HELP,           "help"},
     {Opt::LANG,           "lang"},
     {Opt::VERSION,        "version"},
@@ -1853,6 +1853,34 @@ QString NgPost::nzbPath(const QString &monitorFolder)
     }
 }
 
+void handleHttpProxy(QString username, QString password, QString host, int port) {
+    qDebug() << "Handling HTTP Proxy\n";
+
+    auto networkProxy = QNetworkProxy(QNetworkProxy::HttpProxy, host, port, username, password);
+    QNetworkProxy::setApplicationProxy(networkProxy);
+}
+
+// SOCKS 4 Proxy does not have a username or password (RFC 1928)
+void handleSocks4Proxy(QString username, QString password, QString host, ushort port) {
+    qDebug() << "Handling SOCKS4 Proxy\n";
+
+    auto networkProxy = QNetworkProxy(QNetworkProxy::Socks5Proxy, host, port);
+    QNetworkProxy::setApplicationProxy(networkProxy);
+}
+
+void handleSocks5Proxy(QString username, QString password, QString host, ushort port) {
+    qDebug() << "Handling SOCKS5 Proxy\n";
+
+    auto networkProxy = QNetworkProxy(QNetworkProxy::Socks5Proxy, host, port, username, password);
+    QNetworkProxy::setApplicationProxy(networkProxy);
+}
+
+void handleUnknownProxy() {
+    qDebug() << "Handling Unknown Proxy\n";
+
+    auto networkProxy = QNetworkProxy(QNetworkProxy::NoProxy);
+    QNetworkProxy::setApplicationProxy(networkProxy);
+}
 
 QString NgPost::_parseConfig(const QString &configPath)
 {
@@ -2093,23 +2121,42 @@ QString NgPost::_parseConfig(const QString &configPath)
                     else if (opt == sOptionNames[Opt::SHUTDOWN_CMD])
                         _shutdownCmd = val;
 
-                    else if (opt == sOptionNames[Opt::PROXY_SOCKS5])
+                    else if (opt == sOptionNames[Opt::PROXY])
                     {
+                        ProxyInfo proxyInfo;
+
                         QRegularExpression regExp(sProxyStrRegExp,  QRegularExpression::CaseInsensitiveOption);
                         QRegularExpressionMatch match = regExp.match(val);
                         if (match.hasMatch())
                         {
-                            _proxyUrl = val;
-                            // "^(([^:]+):([^@]+)@)?([\\w\\.\\-_]+):(\\d+)$";
-                            QString user  = match.captured(2);
-                            QString pass  = match.captured(3);
-                            QString host  = match.captured(4);
-                            ushort  port  = match.captured(5).toUShort();
-                            _proxySocks5 = QNetworkProxy(QNetworkProxy::Socks5Proxy, host, port, user, pass);
-                            QNetworkProxy::setApplicationProxy(_proxySocks5);
+                            QRegularExpression regex(R"(^(\w+)://([^:@]*)(?::([^@]*))?@([\w.-]+):(\d+)$)");
+                            QRegularExpressionMatch match = regex.match(val);
+
+                            if (match.hasMatch()) {
+                                proxyInfo.type = match.captured(1); // HTTP, HTTPS, SOCKS4, SOCKS5
+                                proxyInfo.username = match.captured(2); // Username
+                                proxyInfo.password = match.captured(3); // Password
+                                proxyInfo.host = match.captured(4); // Hostname/IP address
+                                proxyInfo.port = match.captured(5).toInt(); // Port as integer
+                            } else {
+                                qWarning() << "Invalid proxy format: " << val;
+                            }
+
+                            std::unordered_map<QString, std::function<void()>> proxyHandlers = {
+                                {"http", [&]() { handleHttpProxy(proxyInfo.username, proxyInfo.password, proxyInfo.host, proxyInfo.port); }},
+                                {"https", [&]() { handleHttpProxy(proxyInfo.username, proxyInfo.password, proxyInfo.host, proxyInfo.port); }},
+                                {"socks4", [&]() { handleSocks4Proxy(proxyInfo.username, proxyInfo.password, proxyInfo.host, proxyInfo.port); }},
+                                {"socks5", [&]() { handleSocks5Proxy(proxyInfo.username, proxyInfo.password, proxyInfo.host, proxyInfo.port); }},
+                            };
+                        
+                            if (proxyHandlers.find(proxyInfo.type) != proxyHandlers.end()) {
+                                proxyHandlers[proxyInfo.type]();
+                            } else {
+                                handleUnknownProxy();
+                            }
                         }
                         else
-                            err += tr("Error parsing Proxy Socks5 parameters. The syntax should be: %1").arg(sProxyStrRegExp);
+                            err += tr("Error parsing Proxy parameters. The syntax should be: %1").arg(sProxyStrRegExp);
 
                     }
 
@@ -2520,8 +2567,13 @@ void NgPost::saveConfig()
                << tr("## Lang for the app. Currently supported: EN, FR, ES, DE, NL, PT, ZH") << "\n"
                << "lang = " << _lang.toUpper() << "\n"
                << "\n"
-               << tr("## use Proxy (only Socks5 type!)") << "\n"
-               << (_proxyUrl.isEmpty()  ? "#PROXY_SOCKS5 = user:pass@192.168.1.1:5555" : _proxyUrl)  << "\n"
+               << tr("## Use a single proxy (supports SOCKS5, SOCKS4, HTTP, and HTTPS types)") << "\n"
+               << (_proxyUrl.isEmpty() ?
+                   "#PROXY = username:password@proxy.example.com:8080\n"
+                   "#PROXY = username:password@proxy.example.com:8443\n"
+                   "#PROXY = username:password@proxy.example.com:1080\n"
+                   "#PROXY = username:password@proxy.example.com:1080" :
+                   _proxyUrl) << "\n"
                << "\n"
                << tr("## destination folder for all your nzb") << "\n"
                << tr("## if you don't put anything, the nzb will be generated in the folder of ngPost on Windows and in /tmp on Linux") << "\n"
