@@ -36,6 +36,7 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     connect(ui->proxyHttpsRadioButton, &QRadioButton::toggled, this, &SettingsWidget::OnValueChanged);
     connect(ui->proxySocks4RadioButton, &QRadioButton::toggled, this, &SettingsWidget::OnValueChanged);
     connect(ui->proxySocks5RadioButton, &QRadioButton::toggled, this, &SettingsWidget::OnValueChanged);
+    connect(ui->autoGenerateArchivePasswordCheckBox, &QCheckBox::toggled, this, &SettingsWidget::OnValueChanged);
 
     // Button related
     connect(ui->cancelButton, &QPushButton::clicked, this, &SettingsWidget::HandleCancel);
@@ -44,6 +45,7 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 
     // Archive related
     connect(ui->archivePasswordTextField, &QLineEdit::textChanged, this, &SettingsWidget::OnValueChanged);
+    connect(ui->autoGenerateArchivePasswordCheckBox, &QCheckBox::toggled, this, &SettingsWidget::OnAutoArchivePasswordToggled);
 
     ui->generateRandomArchivePasswordButton->setIcon(QIcon(":/icons/reset-password.png"));
 
@@ -117,6 +119,15 @@ void SettingsWidget::OnPasswordGenerateClicked()
     auto randomPassword = generateRandomString(passwordLength);
 
     ui->archivePasswordTextField->setText(QString::fromStdString(randomPassword));
+}
+
+void SettingsWidget::OnAutoArchivePasswordToggled() {
+    qDebug() << "Auto gen archive password toggled";
+
+    auto state = ui->autoGenerateArchivePasswordCheckBox->isChecked();
+
+    ui->archivePasswordTextField->setDisabled(state);
+    ui->generateRandomArchivePasswordButton->setDisabled(state);
 }
 
 std::string SettingsWidget::generateRandomString(int length) {

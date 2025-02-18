@@ -21,6 +21,7 @@ private slots:
     void HandleCancel();
     void OnPathSettingsClicked();
     void OnPasswordGenerateClicked();
+    void OnAutoArchivePasswordToggled();
 
 private:
     Ui::SettingsWidget *ui;
