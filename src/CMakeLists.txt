@@ -47,6 +47,7 @@ qt_add_executable(ngPost WIN32
     utils/PureStaticClass.h
     utils/Yenc.cpp utils/Yenc.h
     utils/ConfigUtility.cpp utils/ConfigUtility.h
+    utils/ConfigKeys.cpp utils/ConfigKeys.h
     resources/version.rc
 )
 target_include_directories(ngPost PRIVATE

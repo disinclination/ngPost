@@ -61,8 +61,8 @@ QString ConfigUtility::GetCurrentValue(const QString& key) {
     
     for (const QString& line : lines) {
         QString trimmedLine = line.trimmed();
-        if (trimmedLine.startsWith(key + "=")) {
-            QStringList keyValue = trimmedLine.split("=", Qt::SkipEmptyParts);
+        if (trimmedLine.startsWith(key + " = ")) {
+            QStringList keyValue = trimmedLine.split(" = ", Qt::SkipEmptyParts);
             return keyValue.size() > 1 ? keyValue[1].trimmed() : QString();
         }
     }
@@ -73,14 +73,41 @@ void ConfigUtility::WriteConfig(const QMap<QString, QString>& configMap) {
     QString configPath = GetConfigPath();
     QFile configFile(configPath);
 
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open config file for reading:" << configFile.errorString();
+        return;
+    }
+
+    QStringList lines;
+    QTextStream in(&configFile);
+    while (!in.atEnd()) {
+        lines.append(in.readLine());
+    }
+    configFile.close();
+
+    for (auto it = configMap.constBegin(); it != configMap.constEnd(); ++it) {
+        QString key = it.key();
+        QString newValue = it.value();
+        
+        for (int i = 0; i < lines.size(); ++i) {
+            QString line = lines[i];
+            // Check if the line contains the key and is not a comment
+            if (line.trimmed().startsWith(key + " = ") && !line.trimmed().startsWith("#")) {
+                // Replace the line with the new value
+                lines[i] = QString("%1 = %2").arg(key, newValue);
+                break;
+            }
+        }
+    }
+
     if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Failed to open config file for writing:" << configFile.errorString();
         return;
     }
 
     QTextStream out(&configFile);
-    for (auto it = configMap.constBegin(); it != configMap.constEnd(); ++it) {
-        out << it.key() << " = " << it.value() << "\n";
+    for (const QString& line : lines) {
+        out << line << "\n";
     }
 
     configFile.close();

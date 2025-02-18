@@ -1,6 +1,9 @@
 #ifndef PATHSETTINGSWIDGET_H
 #define PATHSETTINGSWIDGET_H
 
+#include "utils/ConfigKeys.h"
+#include "utils/ConfigUtility.h"
+
 #include <QDialog>
 #include <QLineEdit>
 
@@ -32,6 +35,17 @@ private:
     void selectFile(QLineEdit *lineEdit);
     bool hasChanges() const;
     void LoadPaths();
+    void updateConfigWithPath(QString configKey, QLineEdit* pathField, bool isFile = false) {
+        ConfigUtility configUtility;
+        
+        if (isFile) {
+            selectFile(pathField);
+        } else {
+            selectDirectory(pathField);
+        }
+
+        configUtility.UpdateField(configKey, pathField->text());
+    }
 
 protected:
     void closeEvent(QCloseEvent *event) override;

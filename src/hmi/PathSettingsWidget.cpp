@@ -1,5 +1,6 @@
 #include "PathSettingsWidget.h"
 #include "ui_PathSettingsWidget.h"
+#include "utils/ConfigKeys.h"
 
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -21,11 +22,25 @@ PathSettingsWidget::PathSettingsWidget(QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
 
+    // Read current config 
+    ConfigUtility configUtility;
+    ui->tempPathTextField->setText(configUtility.GetCurrentValue(ConfigKeys::TMP_DIR));
+    ui->nzbPathTextField->setText(configUtility.GetCurrentValue(ConfigKeys::NZBPATH));
+    ui->rarPathTextField->setText(configUtility.GetCurrentValue(ConfigKeys::RAR_PATH));
+    ui->par2PathTextField->setText(configUtility.GetCurrentValue(ConfigKeys::TMP_DIR));
+    ui->postHistoryPathTextField->setText(configUtility.GetCurrentValue(ConfigKeys::POST_HISTORY));
+    ui->logPathTextField->setText(configUtility.GetCurrentValue(ConfigKeys::TMP_DIR));
+
     // Disable save button
     ui->saveButton->setEnabled(false);
 
     // Catch changes on the UI
     connect(ui->tempPathTextField, &QLineEdit::textChanged, this, &PathSettingsWidget::OnValueChanged);
+    connect(ui->nzbPathTextField, &QLineEdit::textChanged, this, &PathSettingsWidget::OnValueChanged);
+    connect(ui->rarPathTextField, &QLineEdit::textChanged, this, &PathSettingsWidget::OnValueChanged);
+    connect(ui->par2PathTextField, &QLineEdit::textChanged, this, &PathSettingsWidget::OnValueChanged);
+    connect(ui->postHistoryPathTextField, &QLineEdit::textChanged, this, &PathSettingsWidget::OnValueChanged);
+    connect(ui->logPathTextField, &QLineEdit::textChanged, this, &PathSettingsWidget::OnValueChanged);
 
     // Button related
     connect(ui->cancelButton, &QPushButton::clicked, this, &PathSettingsWidget::HandleCancel);
@@ -35,7 +50,6 @@ PathSettingsWidget::PathSettingsWidget(QWidget *parent)
     connect(ui->par2PathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnPar2PathButtonClicked);
     connect(ui->postHistoryPathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnPostHistoryPathButtonClicked);
     connect(ui->logPathBrowseButton, &QPushButton::clicked, this, &PathSettingsWidget::OnLogPathButtonClicked);
-
 }
 
 PathSettingsWidget::~PathSettingsWidget()
@@ -116,30 +130,30 @@ void PathSettingsWidget::selectFile(QLineEdit *lineEdit) {
 
 void PathSettingsWidget::OnTempPathButtonClicked()
 {
-    selectDirectory(ui->tempPathTextField);
+    updateConfigWithPath(ConfigKeys::TMP_DIR, ui->tempPathTextField);
 }
 
 void PathSettingsWidget::OnNzbPathButtonClicked()
 {
-    selectDirectory(ui->nzbPathTextField);
+    updateConfigWithPath(ConfigKeys::NZBPATH, ui->nzbPathTextField);
 }
 
 void PathSettingsWidget::OnRarPathButtonClicked()
 {
-    selectFile(ui->rarPathTextField);
+    updateConfigWithPath(ConfigKeys::RAR_PATH, ui->rarPathTextField, true);
 }
 
 void PathSettingsWidget::OnPar2PathButtonClicked()
 {
-    selectFile(ui->par2PathTextField);
+    updateConfigWithPath(ConfigKeys::TMP_DIR, ui->par2PathTextField);
 }
 
 void PathSettingsWidget::OnPostHistoryPathButtonClicked()
 {
-    selectDirectory(ui->postHistoryPathTextField);
+    updateConfigWithPath(ConfigKeys::POST_HISTORY, ui->postHistoryPathTextField);
 }
 
 void PathSettingsWidget::OnLogPathButtonClicked()
 {
-    selectDirectory(ui->logPathTextField);
+    updateConfigWithPath(ConfigKeys::LOG_IN_FILE, ui->logPathTextField);
 }
