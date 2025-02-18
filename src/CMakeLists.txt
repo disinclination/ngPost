@@ -174,6 +174,7 @@ if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E echo "Running windeployqt..."
         COMMAND "${QT_ROOT_DIR}/bin/windeployqt.exe" --verbose 0 "$<TARGET_FILE:${PROJECT_NAME}>"
+        COMMAND_ERROR_IS_FATAL ANY
     )
 endif()
 
