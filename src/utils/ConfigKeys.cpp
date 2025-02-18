@@ -1,0 +1,34 @@
+#include "ConfigKeys.h"
+
+const QString ConfigKeys::LANG = QStringLiteral("LANG");
+const QString ConfigKeys::NZBPATH = QStringLiteral("NZBPATH");
+const QString ConfigKeys::MONITOR_SEC_DELAY_SCAN = QStringLiteral("MONITOR_SEC_DELAY_SCAN");
+const QString ConfigKeys::INPUTDIR = QStringLiteral("INPUTDIR");
+const QString ConfigKeys::POST_HISTORY = QStringLiteral("POST_HISTORY");
+const QString ConfigKeys::GROUPS = QStringLiteral("GROUPS");
+const QString ConfigKeys::GROUP_POLICY = QStringLiteral("GROUP_POLICY");
+const QString ConfigKeys::GEN_FROM = QStringLiteral("GEN_FROM");
+const QString ConfigKeys::DISP_PROGRESS = QStringLiteral("DISP_PROGRESS");
+const QString ConfigKeys::ARTICLE_SIZE = QStringLiteral("ARTICLE_SIZE");
+const QString ConfigKeys::RETRY = QStringLiteral("RETRY");
+const QString ConfigKeys::NZB_RM_ACCENTS = QStringLiteral("NZB_RM_ACCENTS");
+const QString ConfigKeys::RESUME_WAIT = QStringLiteral("RESUME_WAIT");
+const QString ConfigKeys::SOCK_TIMEOUT = QStringLiteral("SOCK_TIMEOUT");
+const QString ConfigKeys::PREPARE_PACKING = QStringLiteral("PREPARE_PACKING");
+const QString ConfigKeys::LOG_IN_FILE = QStringLiteral("LOG_IN_FILE");
+const QString ConfigKeys::TMP_DIR = QStringLiteral("TMP_DIR");
+const QString ConfigKeys::TMP_RAM_RATIO = QStringLiteral("TMP_RAM_RATIO");
+const QString ConfigKeys::RAR_PATH = QStringLiteral("RAR_PATH");
+const QString ConfigKeys::RAR_SIZE = QStringLiteral("RAR_SIZE");
+const QString ConfigKeys::RAR_MAX = QStringLiteral("RAR_MAX");
+const QString ConfigKeys::PAR2_PCT = QStringLiteral("PAR2_PCT");
+const QString ConfigKeys::LENGTH_NAME = QStringLiteral("LENGTH_NAME");
+const QString ConfigKeys::LENGTH_PASS = QStringLiteral("LENGTH_PASS");
+const QString ConfigKeys::SERVER_HOST = QStringLiteral("SERVER_HOST");
+const QString ConfigKeys::SERVER_PORT = QStringLiteral("SERVER_PORT");
+const QString ConfigKeys::SERVER_SSL = QStringLiteral("SERVER_SSL");
+const QString ConfigKeys::SERVER_USER = QStringLiteral("SERVER_USER");
+const QString ConfigKeys::SERVER_PASS = QStringLiteral("SERVER_PASS");
+const QString ConfigKeys::SERVER_CONNECTION = QStringLiteral("SERVER_CONNECTION");
+const QString ConfigKeys::SERVER_ENABLED = QStringLiteral("SERVER_ENABLED");
+const QString ConfigKeys::SERVER_NZBCHECK = QStringLiteral("SERVER_NZBCHECK");
