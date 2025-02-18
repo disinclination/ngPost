@@ -80,4 +80,3 @@ jobs:
         with:
           name: binary-macos
           path: src/build/ngPost.app/Contents/MacOS/ngPost
-          path: all-binaries/
