@@ -19,7 +19,9 @@ jobs:
       - name: Build Project on Linux
         run: |
           cd src
-          qmake ngPost.pro
+          mkdir build
+          cd build
+          cmake .  # Use '.' to specify current directory as CMakeLists.txt is here
           make
       - name: Upload Linux Binary
         uses: actions/upload-artifact@v4
@@ -44,9 +46,10 @@ jobs:
       - name: Build Project on Windows with MSVC
         run: |
           cd src
-          del Makefile*
-          qmake ngPost.pro -spec win32-msvc CONFIG+="qtquickcompiler release use_hmi" DEFINES+="UNICODE _UNICODE WIN32 APP_VERSION=5.0 __USE_CONNECTION_TIMEOUT__ __COMPUTE_IMMEDIATE_SPEED__ __USE_TMP_RAM__ __RELEASE_ARTICLES_WHEN_CON_FAILS__"
-          nmake
+          mkdir build
+          cd build
+          cmake -G "Visual Studio 17 2022" -D CMAKE_RUNTIME_OUTPUT_DIRECTORY=./release .  # Use '.' for current directory
+          cmake --build . --config Release
       - name: Deploy Qt DLLs with windeployqt
         run: |
           windeployqt src/release/ngPost.exe --release --qmldir src --compiler-runtime
@@ -72,7 +75,9 @@ jobs:
       - name: Build Project on macOS
         run: |
           cd src
-          qmake ngPost.pro
+          mkdir build
+          cd build
+          cmake .  # Use '.' to specify current directory
           make
       - name: Upload macOS Binary
         uses: actions/upload-artifact@v4
