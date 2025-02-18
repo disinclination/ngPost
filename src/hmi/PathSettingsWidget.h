@@ -31,6 +31,7 @@ private:
     void selectDirectory(QLineEdit *lineEdit);
     void selectFile(QLineEdit *lineEdit);
     bool hasChanges() const;
+    void LoadPaths();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

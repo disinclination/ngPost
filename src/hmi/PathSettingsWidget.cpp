@@ -43,6 +43,10 @@ PathSettingsWidget::~PathSettingsWidget()
     delete ui;
 }
 
+void PathSettingsWidget::LoadPaths() {
+    
+}
+
 void PathSettingsWidget::HandleCancel()
 {
     if (_valueHasChanged) {
