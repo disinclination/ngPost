@@ -44,7 +44,7 @@ jobs:
       - name: Build Project on Windows with MSVC
         run: |
           cd src
-          cmake -G "Visual Studio 17 2022" -D CMAKE_RUNTIME_OUTPUT_DIRECTORY=./release .  # Use '.' for current directory
+          cmake -G "Visual Studio 17 2022" .
           cmake --build . --config Release
       - name: Deploy Qt DLLs with windeployqt
         run: |
