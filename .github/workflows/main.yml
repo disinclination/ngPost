@@ -19,9 +19,7 @@ jobs:
       - name: Build Project on Linux
         run: |
           cd src
-          mkdir build
-          cd build
-          cmake .  # Use '.' to specify current directory as CMakeLists.txt is here
+          cmake .
           make
       - name: Upload Linux Binary
         uses: actions/upload-artifact@v4
@@ -46,8 +44,6 @@ jobs:
       - name: Build Project on Windows with MSVC
         run: |
           cd src
-          mkdir build
-          cd build
           cmake -G "Visual Studio 17 2022" -D CMAKE_RUNTIME_OUTPUT_DIRECTORY=./release .  # Use '.' for current directory
           cmake --build . --config Release
       - name: Deploy Qt DLLs with windeployqt
@@ -75,9 +71,7 @@ jobs:
       - name: Build Project on macOS
         run: |
           cd src
-          mkdir build
-          cd build
-          cmake .  # Use '.' to specify current directory
+          cmake .
           make
       - name: Upload macOS Binary
         uses: actions/upload-artifact@v4
