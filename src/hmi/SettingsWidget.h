@@ -2,6 +2,7 @@
 #define SETTINGSWIDGET_H
 
 #include <QDialog>
+#include <QMap>
 
 namespace Ui {
 class SettingsWidget;
@@ -27,6 +28,9 @@ private:
     Ui::SettingsWidget *ui;
     bool hasChanges() const;
     std::string generateRandomString(int length);
+    QMap<QString, QString> updatedSettings;
+    void setSetting(const QString& key, const QString& value);
+    
 
 protected:
     void closeEvent(QCloseEvent *event) override;

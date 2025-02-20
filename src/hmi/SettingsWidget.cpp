@@ -58,6 +58,10 @@ SettingsWidget::~SettingsWidget()
     delete ui;
 }
 
+void SettingsWidget::setSetting(const QString& key, const QString& value) {
+    updatedSettings[key] = value;
+}
+
 bool SettingsWidget::hasChanges() const
 {
     return _valueHasChanged;
