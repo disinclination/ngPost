@@ -4,55 +4,90 @@ project(ngPost VERSION 1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+# Find the required Qt6 packages
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network)
+
+# Enable Qt's standard project setup
 qt_standard_project_setup()
 
+# Option to enable HMI functionality
 option(use_hmi "Enable HMI functionality" ON)
-
 if(DEFINED ENV{USE_HMI})
     set(use_hmi "$ENV{USE_HMI}" CACHE BOOL "Enable HMI functionality.")
 endif()
 
+# Check for QT_ROOT_DIR environment variable
 if (DEFINED ENV{QT_ROOT_DIR})
     set(QT_ROOT_DIR "$ENV{QT_ROOT_DIR}")
 else()
     message(FATAL_ERROR "QT_ROOT_DIR environment variable is not set. Please set it in your environment.")
 endif()
 
-qt_add_executable(ngPost WIN32
-    ArticleBuilder.cpp ArticleBuilder.h
-    FileUploader.cpp FileUploader.h
-    FoldersMonitorForNewFiles.cpp FoldersMonitorForNewFiles.h
-    NgPost.cpp NgPost.h
-    NntpCheckCon.cpp NntpCheckCon.h
-    NntpConnection.cpp NntpConnection.h
-    NzbCheck.cpp NzbCheck.h
-    Poster.cpp Poster.h
-    PostingJob.cpp PostingJob.h
-    hmi/PathSettingsWidget.cpp hmi/PathSettingsWidget.h hmi/PathSettingsWidget.ui
-    hmi/SettingsWidget.cpp hmi/SettingsWidget.h hmi/SettingsWidget.ui
+# Specify the source files
+set(SOURCES
+    ArticleBuilder.cpp
+    FileUploader.cpp
+    FoldersMonitorForNewFiles.cpp
+    NgPost.cpp
+    NntpCheckCon.cpp
+    NntpConnection.cpp
+    NzbCheck.cpp
+    Poster.cpp
+    PostingJob.cpp
     main.cpp
-    nntp/Nntp.cpp nntp/Nntp.h
-    nntp/NntpArticle.cpp nntp/NntpArticle.h
-    nntp/NntpFile.cpp nntp/NntpFile.h
+    nntp/Nntp.cpp
+    nntp/NntpArticle.cpp
+    nntp/NntpFile.cpp
+    utils/CmdOrGuiApp.cpp
+    utils/Yenc.cpp
+)
+
+# Specify the header files
+set(HEADERS
+    ArticleBuilder.h
+    FileUploader.h
+    FoldersMonitorForNewFiles.h
+    NgPost.h
+    NntpCheckCon.h
+    NntpConnection.h
+    NzbCheck.h
+    Poster.h
+    PostingJob.h
+    nntp/Nntp.h
+    nntp/NntpArticle.h
+    nntp/NntpFile.h
     nntp/NntpServerParams.h
-    utils/CmdOrGuiApp.cpp utils/CmdOrGuiApp.h
+    utils/CmdOrGuiApp.h
     utils/Macros.h
     utils/PureStaticClass.h
-    utils/Yenc.cpp utils/Yenc.h
-    utils/ConfigUtility.cpp utils/ConfigUtility.h
+    utils/Yenc.h
+)
+
+# Specify the UI files
+set(UI_FILES
+    hmi/PostingWidget.ui
+    hmi/AutoPostWidget.ui
+    hmi/MainWindow.ui
+)
+
+# Add the executable target and include the source, header, and UI files
+qt_add_executable(ngPost WIN32
+    ${SOURCES}
+    ${HEADERS}
+    ${UI_FILES}
     resources/version.rc
 )
+
+# Include the directories for headers and UI files
 target_include_directories(ngPost PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+# Set compile definitions
 target_compile_definitions(ngPost PRIVATE
     APP_VERSION="5.0"
     QT_DEPRECATED_WARNINGS
@@ -62,17 +97,16 @@ target_compile_definitions(ngPost PRIVATE
     __USE_TMP_RAM__
 )
 
+# Link the Qt6 libraries to your executable
 target_link_libraries(ngPost PRIVATE
-    Qt::Core
-    Qt::Gui
-    Qt::Network
-    Qt::Widgets
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Network
+    Qt6::Widgets
 )
 
-
-# Resources:
+# Resources
 set(resources_resource_files
-    "resources/icons/reset-password.png"
     "resources/icons/about.png"
     "resources/icons/auto.png"
     "resources/icons/clear.png"
@@ -112,25 +146,28 @@ set(resources_resource_files
 )
 
 qt_add_resources(ngPost "resources"
-    PREFIX
-        "/"
-    BASE
-        "resources"
-    FILES
-        ${resources_resource_files}
+    PREFIX "/"
+    BASE "resources"
+    FILES ${resources_resource_files}
 )
+
 set(qmake_immediate_resource_files
     "resources/version.rc"
 )
 
 qt_add_resources(ngPost "qmake_immediate"
-    PREFIX
-        "/"
-    FILES
-        ${qmake_immediate_resource_files}
+    PREFIX "/"
+    FILES ${qmake_immediate_resource_files}
 )
 
+# HMI specific settings
 if(use_hmi)
+    set(UI_FILES
+        hmi/MainWindow.ui
+        hmi/AutoPostWidget.ui
+        hmi/PostingWidget.ui
+    )
+
     target_sources(ngPost PUBLIC
         hmi/AutoPostWidget.cpp hmi/AutoPostWidget.h hmi/AutoPostWidget.ui
         hmi/CheckBoxCenterWidget.cpp hmi/CheckBoxCenterWidget.h
@@ -144,13 +181,13 @@ if(use_hmi)
     )
 
     target_link_libraries(ngPost PRIVATE
-        Qt::Gui
+        Qt6::Gui
     )
 endif()
 
 if((use_hmi) AND ((QT_VERSION_MAJOR GREATER 4)))
     target_link_libraries(ngPost PRIVATE
-        Qt::Widgets
+        Qt6::Widgets
     )
 endif()
 
@@ -163,6 +200,7 @@ if(NOT use_hmi)
     )
 endif()
 
+# Windows specific settings
 if(WIN32)
     set_target_properties(ngPost PROPERTIES
         WIN32_EXECUTABLE FALSE
@@ -174,10 +212,10 @@ if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E echo "Running windeployqt..."
         COMMAND "${QT_ROOT_DIR}/bin/windeployqt.exe" --verbose 0 "$<TARGET_FILE:${PROJECT_NAME}>"
-        COMMAND_ERROR_IS_FATAL ANY
     )
 endif()
 
+# Debug specific settings
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
     target_compile_definitions(ngPost PRIVATE
         -LOG_CONNECTION_ERRORS_BEFORE_EMIT_SIGNALS
@@ -186,24 +224,29 @@ if(CMAKE_BUILD_TYPE STREQUAL Debug)
         LOG_CONNECTION_STEPS
         LOG_CONSTRUCTORS
         LOG_NEWS_AUTH
-        __DEBUG__
+        **DEBUG**
     )
 endif()
 
+# Release specific settings
 if(NOT CMAKE_BUILD_TYPE STREQUAL Debug)
     target_compile_definitions(ngPost PRIVATE
         QT_NO_DEBUG_OUTPUT
     )
 endif()
 
+# Install targets
 install(TARGETS ngPost
     BUNDLE DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+# Generate deploy script
 qt_generate_deploy_app_script(
     TARGET ngPost
     FILENAME_VARIABLE deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
+
+# Install deploy script
 install(SCRIPT ${deploy_script})

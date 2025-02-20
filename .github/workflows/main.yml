@@ -19,7 +19,7 @@ jobs:
       - name: Build Project on Linux
         run: |
           cd src
-          qmake ngPost.pro
+          cmake .
           make
       - name: Upload Linux Binary
         uses: actions/upload-artifact@v4
@@ -44,9 +44,8 @@ jobs:
       - name: Build Project on Windows with MSVC
         run: |
           cd src
-          del Makefile*
-          qmake ngPost.pro -spec win32-msvc CONFIG+="qtquickcompiler release use_hmi" DEFINES+="UNICODE _UNICODE WIN32 APP_VERSION=5.0 __USE_CONNECTION_TIMEOUT__ __COMPUTE_IMMEDIATE_SPEED__ __USE_TMP_RAM__ __RELEASE_ARTICLES_WHEN_CON_FAILS__"
-          nmake
+          cmake -G "Visual Studio 17 2022" .
+          cmake --build . --config Release
       - name: Deploy Qt DLLs with windeployqt
         run: |
           windeployqt src/release/ngPost.exe --release --qmldir src --compiler-runtime
@@ -72,7 +71,7 @@ jobs:
       - name: Build Project on macOS
         run: |
           cd src
-          qmake ngPost.pro
+          cmake .
           make
       - name: Upload macOS Binary
         uses: actions/upload-artifact@v4
