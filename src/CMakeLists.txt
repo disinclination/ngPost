@@ -38,16 +38,12 @@ set(SOURCES
     NzbCheck.cpp
     Poster.cpp
     PostingJob.cpp
-    hmi/PathSettingsWidget.cpp
-    hmi/SettingsWidget.cpp
     main.cpp
     nntp/Nntp.cpp
     nntp/NntpArticle.cpp
     nntp/NntpFile.cpp
     utils/CmdOrGuiApp.cpp
     utils/Yenc.cpp
-    utils/ConfigUtility.cpp
-    utils/ConfigKeys.cpp
 )
 
 # Specify the header files
@@ -61,8 +57,6 @@ set(HEADERS
     NzbCheck.h
     Poster.h
     PostingJob.h
-    hmi/PathSettingsWidget.h
-    hmi/SettingsWidget.h
     nntp/Nntp.h
     nntp/NntpArticle.h
     nntp/NntpFile.h
@@ -70,19 +64,11 @@ set(HEADERS
     utils/CmdOrGuiApp.h
     utils/Macros.h
     utils/PureStaticClass.h
-<<<<<<< Updated upstream
-    utils/Yenc.cpp utils/Yenc.h
-    utils/ConfigUtility.cpp utils/ConfigUtility.h
-=======
     utils/Yenc.h
-    utils/ConfigUtility.h
-    utils/ConfigKeys.h
 )
 
 # Specify the UI files
 set(UI_FILES
-    hmi/PathSettingsWidget.ui
-    hmi/SettingsWidget.ui
     hmi/PostingWidget.ui
     hmi/AutoPostWidget.ui
     hmi/MainWindow.ui
@@ -93,7 +79,6 @@ qt_add_executable(ngPost WIN32
     ${SOURCES}
     ${HEADERS}
     ${UI_FILES}
->>>>>>> Stashed changes
     resources/version.rc
 )
 
@@ -122,7 +107,6 @@ target_link_libraries(ngPost PRIVATE
 
 # Resources
 set(resources_resource_files
-    "resources/icons/reset-password.png"
     "resources/icons/about.png"
     "resources/icons/auto.png"
     "resources/icons/clear.png"
@@ -182,7 +166,6 @@ if(use_hmi)
         hmi/MainWindow.ui
         hmi/AutoPostWidget.ui
         hmi/PostingWidget.ui
-        hmi/SettingsWidget.ui
     )
 
     target_sources(ngPost PUBLIC
@@ -190,7 +173,6 @@ if(use_hmi)
         hmi/CheckBoxCenterWidget.cpp hmi/CheckBoxCenterWidget.h
         hmi/MainWindow.cpp hmi/MainWindow.h hmi/MainWindow.ui
         hmi/PostingWidget.cpp hmi/PostingWidget.h hmi/PostingWidget.ui
-        hmi/SettingsWidget.cpp hmi/SettingsWidget.h hmi/SettingsWidget.ui
         hmi/SignedListWidget.cpp hmi/SignedListWidget.h
     )
 
@@ -230,7 +212,6 @@ if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E echo "Running windeployqt..."
         COMMAND "${QT_ROOT_DIR}/bin/windeployqt.exe" --verbose 0 "$<TARGET_FILE:${PROJECT_NAME}>"
-        COMMAND_ERROR_IS_FATAL ANY
     )
 endif()
 
